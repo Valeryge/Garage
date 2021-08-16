@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         Engine m_Engine;
         List<Wheel> m_Wheels;
 
-        Vehicle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate)
+        public Vehicle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate)
         {
 
         }
