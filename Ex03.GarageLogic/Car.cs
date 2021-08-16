@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
-        public enum Color
+        public enum CarColor
         {
             Black,
             White,
@@ -16,12 +16,19 @@ namespace Ex03.GarageLogic
             Silver
         }
 
-        public Color m_Color;
+        public CarColor m_Color;
         public int m_NumOfDoors;
 
-        public Car(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate): base(i_Properties, i_LicensePlate)
+        public Car()
         {
-
         }
+
+
+        public CarColor Color
+        {
+            get { return m_Color; }
+            set { m_Color = value; }
+        }
+     
     }
 }

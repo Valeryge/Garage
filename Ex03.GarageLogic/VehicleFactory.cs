@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Ex03.GarageLogic.GarageManager;
+using static Ex03.GarageLogic.GasEngine;
 
 namespace Ex03.GarageLogic
 {
@@ -24,22 +26,8 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public enum FuelType
-        {
-            None = 0,
-            Octan98 = 1,
-            Octan95 = 2,
-            Soler = 3
-        }
-
-        public enum VehicleType
-        {
-            GasCar = 1,
-            ElectricCar = 2,
-            GasMotorcycle = 3,
-            ElectricMotorcycle = 4,
-            Truck = 5
-        }
+     
+        
 
         Dictionary<VehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<VehicleType, VehicleProperties>();
 

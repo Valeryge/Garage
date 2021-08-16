@@ -11,13 +11,18 @@ namespace Ex03.GarageLogic
         string m_ModelName;
         string m_LicensePlate;
         float m_EnergyPercent;
-        Engine m_Engine;
         List<Wheel> m_Wheels;
+        GarageManager.VehicleType m_VehicleType;
 
-        public Vehicle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate)
+        public Vehicle()
         {
 
         }
 
+
+        public GarageManager.VehicleType Type
+        {
+            get { return m_VehicleType; }
+        }
     }
 }

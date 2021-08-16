@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class GarageManager
+    public class GarageManager
     {
-        public struct CustomerCard
+        public enum VehicleType
         {
-            Vehicle vehicle;
-            string customerName;
-            string phoneNumber;
-            RepairState vehicleState;
+            GasCar = 1,
+            ElectricCar = 2,
+            GasMotorcycle = 3,
+            ElectricMotorcycle = 4,
+            Truck = 5
         }
 
         public enum RepairState
@@ -23,9 +24,52 @@ namespace Ex03.GarageLogic
             Paid = 2
         }
 
-        public Dictionary<string, CustomerCard> m_CustomerCards = new Dictionary<string, CustomerCard>();
+        private Dictionary<string, Customer> m_CustomerCards = new Dictionary<string, Customer>();
 
-        
+
+        public void Charge(string plate, int hours)
+        {
+            Customer customer = m_CustomerCards[plate];
+            if (customer.Vehicle.Type == VehicleType.ElectricCar)
+            {
+                (customer.Vehicle as ElectricCar).Engine.Charge(hours);
+            }
+            else if (customer.Vehicle.Type == VehicleType.ElectricMotorcycle)
+            {
+                (customer.Vehicle as ElectricMotorcycle).Engine.Charge(hours);
+            }
+            else
+            {
+                throw new Exception("The vehicle type is not electric");
+            }
+
+        }
+
+
+        public void addGasCar()
+        {
+
+        }
+
+        public void addElectricCar()
+        {
+
+        }
+
+        public void addGasMotorcycle()
+        {
+
+        }
+
+        public void addElectricMotorcycle()
+        {
+
+        }
+
+        public void addTrack()
+        {
+
+        }
 
     }   
 }
