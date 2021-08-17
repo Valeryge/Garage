@@ -54,6 +54,11 @@ namespace Ex03.GarageLogic
             return licensePlates;
         }
 
+        public void AddGasCar()
+        {
+            
+        }
+
         public void ChargeElectricVehicle(string i_LicensePlate, int i_MinutesForCharge)
         {
             CustomerCard card = null;
@@ -123,60 +128,6 @@ namespace Ex03.GarageLogic
             }
 
             return isValid;
-        }
-
-        public StringBuilder GetAllLicensePlatesString()
-        {
-            StringBuilder licensePlates = new StringBuilder();
-
-            foreach (KeyValuePair<string, CustomerCard> entry in m_CustomerCards)
-            {
-                licensePlates.Append(entry.Key);
-                licensePlates.Append("\n");
-            }
-
-            return licensePlates;
-        }
-
-        public StringBuilder GetVehicleTypeOptionsString() {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(VehicleFactory.VehicleType)))
-            {
-                String name = Enum.GetName(typeof(VehicleFactory.VehicleType), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
-        }
-
-        public StringBuilder GetColorOptionsString()
-        {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(Car.Color)))
-            {
-                String name = Enum.GetName(typeof(Car.Color), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
-        }
-
-        public StringBuilder GetFuelOptionsString()
-        {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(VehicleFactory.FuelType)))
-            {
-                String name = Enum.GetName(typeof(VehicleFactory.FuelType), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
         }
     }   
 }
