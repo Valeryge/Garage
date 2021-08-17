@@ -8,9 +8,19 @@ namespace Ex03.GarageLogic
 {
     public class ElectricEngine : Engine
     {
-        public ElectricEngine(float i_TankSize, float i_CurrentCapacity): base(i_TankSize, i_CurrentCapacity)
+        public ElectricEngine(float i_TankSize): base(i_TankSize)
         {
-            
+        }
+
+        public void Charge(float i_HoursToCharge)
+        {
+            if (i_HoursToCharge + m_CurrentEnergyAmount <= m_MaxEnergyAmount)
+            {
+                m_CurrentEnergyAmount += i_HoursToCharge;
+            } else
+            {
+                //TODO: Expetion
+            }
         }
     }
 }
