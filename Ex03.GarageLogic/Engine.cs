@@ -8,18 +8,24 @@ namespace Ex03.GarageLogic
 {
     public abstract class Engine
     {
-        float m_TankSize;
-        float m_CurrentCapacity;
+        protected float m_MaxEnergyAmount;
+        protected float m_CurrentEnergyAmount;
 
-        public Engine(float i_TankSize, float i_CurrentCapacity)
+        public Engine(float i_MaxEnergyAmount)
         {
-            m_TankSize = i_TankSize;
-            m_CurrentCapacity = i_CurrentCapacity;
+            m_MaxEnergyAmount = i_MaxEnergyAmount;
+            m_CurrentEnergyAmount = 0;
+        }
+
+        public float CurrentEnergyAmount
+        {
+            get { return m_CurrentEnergyAmount;  }
+            set { m_CurrentEnergyAmount = value; }
         }
 
         public float GetEnergyPercent()
         {
-            return m_CurrentCapacity / m_TankSize * 100;
+            return m_CurrentEnergyAmount / m_MaxEnergyAmount * 100;
         }
     }
 }
