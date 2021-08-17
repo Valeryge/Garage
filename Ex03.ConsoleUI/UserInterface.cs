@@ -6,6 +6,13 @@ namespace Ex03.ConsoleUI
 {
     class UserInterface
     {
+        GarageManager m_GarageManager;
+
+        public UserInterface()
+        {
+            m_GarageManager = new GarageManager();
+        }
+
         public void startupGarage()
         {
             int serviceChoice;
@@ -119,7 +126,7 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine("Enter vehicle licence plate number:");
             string licencePlate = Console.ReadLine();
-            bool isVehicleExist = IsVehicleInGarage(licencePlate);
+            bool isVehicleExist = m_GarageManager.IsVehicleInGarage(licencePlate);
             if (isVehicleExist)
             {
                 //todo: print new status

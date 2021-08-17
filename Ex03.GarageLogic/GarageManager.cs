@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class GarageManager
+    public class GarageManager
     {
         VehicleFactory m_Factory = new VehicleFactory();
         public Dictionary<string, CustomerCard> m_CustomerCards = new Dictionary<string, CustomerCard>();
