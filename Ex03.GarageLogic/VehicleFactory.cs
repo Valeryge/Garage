@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
     public class VehicleFactory
     {
         private Dictionary<VehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<VehicleType, VehicleProperties>();
-        private Dictionary<VehicleType, List<string>> m_UniqueDataDitionary = new Dictionary<VehicleType, List<string>>();
+        private Dictionary<VehicleType, List<string>> m_UniqueDataDictionary = new Dictionary<VehicleType, List<string>>();
 
         public class VehicleProperties
         {
@@ -63,11 +63,11 @@ namespace Ex03.GarageLogic
 
         private void initVehicleExtraData()
         {
-            m_UniqueDataDitionary.Add(VehicleType.GasCar, new List<string>(new string[] { "color", "numberOfDoors", "gasAmount" }));
-            m_UniqueDataDitionary.Add(VehicleType.ElectricCar, new List<string>(new string[] { "color", "numberOfDoors", "currentBattery" }));
-            m_UniqueDataDitionary.Add(VehicleType.GasMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "currentBattary" }));
-            m_UniqueDataDitionary.Add(VehicleType.ElectricMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "gasAmount" }));
-            m_UniqueDataDitionary.Add(VehicleType.Truck, new List<string>(new string[] { "isDangerSubstance", "maxWeight" }));
+            m_UniqueDataDictionary.Add(VehicleType.GasCar, new List<string>(new string[] { "color", "numberOfDoors", "gasAmount", "airInTires" }));
+            m_UniqueDataDictionary.Add(VehicleType.ElectricCar, new List<string>(new string[] { "color", "numberOfDoors", "currentBattery", "airInTires" }));
+            m_UniqueDataDictionary.Add(VehicleType.GasMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "currentBattary", "airInTires"}));
+            m_UniqueDataDictionary.Add(VehicleType.ElectricMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "gasAmount", "airInTires"}));
+            m_UniqueDataDictionary.Add(VehicleType.Truck, new List<string>(new string[] { "isDangerSubstance", "maxWeight", "gasAmount", "airInTires" }));
         }
 
         public Vehicle CreateVehicle(int i_Type, string i_LicensePlate)
@@ -93,7 +93,7 @@ namespace Ex03.GarageLogic
 
         public List<string> GetUniqueDataFields(VehicleType i_Type)
         {
-            return m_UniqueDataDitionary[i_Type];
+            return m_UniqueDataDictionary[i_Type];
         }
     }
 }

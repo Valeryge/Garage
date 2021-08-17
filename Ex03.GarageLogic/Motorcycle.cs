@@ -21,5 +21,80 @@ namespace Ex03.GarageLogic
 
         }
 
+        public void SetProperty(KeyValuePair<string, string> i_Pair)
+        {
+            switch (i_Pair.Key)
+            {
+                case "licenseType":
+                    setLicenseType(i_Pair.Value);
+                    break;
+                case "engineVolume":
+                    setEngineVolume(i_Pair.Value);
+                    break;
+                case "gasAmount":
+                case "currentBattary":
+                    setCurrentEnergyAmount(i_Pair.Value);
+                    break;
+                case "airInTires":
+                    SetTiresPressure(i_Pair.Value);
+                    break;
+            }
+        }
+
+        private void setEngineVolume(string i_Volume)
+        {
+            int number;
+            bool success = int.TryParse(i_Volume, out number);
+
+            if (success)
+            {
+                if (number > 0)
+                {
+                    m_EngineVolume = number;
+                } else
+                {
+                    throw new ArgumentException("Volume cant be negative");
+                }
+            }
+            else
+            {
+                throw new FormatException("Not a number");
+            }
+        }
+
+        private void setLicenseType(string i_Type)
+        {
+            int number;
+            bool success = int.TryParse(i_Type, out number);
+
+            if (success)
+            {
+                if (isValidLicenseType(number))
+                {
+                    m_LicenseType = (LicenseType)number;
+                }
+                else
+                {
+                    throw new ArgumentException("Not Valid License type Enum");
+                }
+            }
+            else
+            {
+                throw new FormatException("Not a number");
+            }
+        }
+
+        private bool isValidLicenseType(int i_Type)
+        {
+            bool isValid = false;
+
+            if (Enum.IsDefined(typeof(LicenseType), i_Type))
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
     }
 }

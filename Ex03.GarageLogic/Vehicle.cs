@@ -8,11 +8,17 @@ namespace Ex03.GarageLogic
 {
     public class Vehicle
     {
-        private string m_ModelName;
-        private string m_LicensePlate;
-        private float m_EnergyPercent;
-        private List<Wheel> m_Wheels;
-        private Engine m_Engine;
+        protected string m_ModelName;
+        protected string m_LicensePlate;
+        protected float m_EnergyPercent;
+        protected List<Wheel> m_Wheels;
+        protected Engine m_Engine;
+        protected readonly VehicleFactory.VehicleType r_Type;
+
+        public VehicleFactory.VehicleType VehicleType
+        {
+            get { return r_Type;  }
+        }
 
         public Engine Engine
         {
@@ -27,6 +33,39 @@ namespace Ex03.GarageLogic
             } else
             {
                 m_Engine = new GasEngine(i_Properties.m_TankSize, i_Properties.m_FuelType);
+            }
+        }
+
+        public void SetTiresPressure(string i_Pressure)
+        {
+            int number;
+            bool success = int.TryParse(i_Pressure, out number);
+
+            if (success)
+            {
+                foreach (Wheel wheel in m_Wheels)
+                {
+                    wheel.Pressure = number;
+                }
+            }
+            else
+            {
+                throw new FormatException("Not a number");
+            }
+        }
+
+        protected void setCurrentEnergyAmount(string i_Amount)
+        {
+            float number;
+            bool success = float.TryParse(i_Amount, out number);
+
+            if (success)
+            {
+                m_Engine.CurrentEnergyAmount = number;
+            }
+            else
+            {
+                throw new FormatException("Not a number");
             }
         }
 

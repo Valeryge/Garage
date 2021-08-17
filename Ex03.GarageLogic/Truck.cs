@@ -15,5 +15,60 @@ namespace Ex03.GarageLogic
         {
 
         }
+
+        public void SetProperty(KeyValuePair<string, string> i_Pair)
+        {
+            switch (i_Pair.Key)
+            {
+                case "isDangerSubstance":
+                    setIsDangerSubstence(i_Pair.Value);
+                    break;
+                case "maxWeight":
+                    setMaxWeight(i_Pair.Value);
+                    break;
+                case "gasAmount":
+                    setCurrentEnergyAmount(i_Pair.Value);
+                    break;
+                case "airInTires":
+                    SetTiresPressure(i_Pair.Value);
+                    break;
+            }
+        }
+
+        private void setMaxWeight(string i_Weight)
+        {
+            int number;
+            bool success = int.TryParse(i_Weight, out number);
+
+            if (success)
+            {
+                if (number > 0)
+                {
+                    m_MaxWeight = number;
+                }
+                else
+                {
+                    throw new ArgumentException("Max Weight cant be negative");
+                }
+            }
+            else
+            {
+                throw new FormatException("Not a number");
+            }
+        }
+
+        private void setIsDangerSubstence(string i_IsDanger)
+        {
+            if (i_IsDanger == "0")
+            {
+                m_IsDangerSubstence = false;
+            } else if (i_IsDanger == "1")
+            {
+                m_IsDangerSubstence = true;
+            } else
+            {
+                throw new ArgumentException("Enter 1 for yes and 0 for true");
+            }
+        }
     }
 }

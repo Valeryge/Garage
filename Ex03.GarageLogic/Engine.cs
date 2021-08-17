@@ -20,8 +20,24 @@ namespace Ex03.GarageLogic
         public float CurrentEnergyAmount
         {
             get { return m_CurrentEnergyAmount;  }
-            set { m_CurrentEnergyAmount = value; }
+            set 
+            {
+                if (value <= m_MaxEnergyAmount)
+                {
+                    m_CurrentEnergyAmount = value;
+                } else
+                {
+                    // TODO: Out of range
+                }
+            }
         }
+        
+        public float MaxEnergyAmount
+        {
+            get { return m_MaxEnergyAmount;  }
+            set { m_MaxEnergyAmount = value; }
+        }
+
 
         public float GetEnergyPercent()
         {

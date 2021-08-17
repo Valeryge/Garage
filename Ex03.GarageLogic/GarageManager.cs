@@ -28,19 +28,38 @@ namespace Ex03.GarageLogic
             else
             {
                 Vehicle vehicle = m_Factory.CreateVehicle(i_VehicleType, i_LicensePlate);
-                m_CustomerCards[i_LicensePlate] = new CustomerCard(vehicle, i_CustomerName, i_CustomerPhone);
+                m_CustomerCards[i_LicensePlate] = new CustomerCard(vehicle, i_CustomerName, i_CustomerPhone, (VehicleFactory.VehicleType)i_VehicleType);
                 added = true;
             }
 
             return added;
         }
 
+        public void SetProperty(string i_LicensePlate, KeyValuePair<string, string> i_Pair)
+        {
+            CustomerCard card;
+
+            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
+            switch (card.VehicleType)
+            {
+                case VehicleFactory.VehicleType.ElectricCar:
+                case VehicleFactory.VehicleType.GasCar:
+                    (card.Vehicle as Car).SetProperty(i_Pair);
+                    break;
+                case VehicleFactory.VehicleType.ElectricMotorcycle:
+                case VehicleFactory.VehicleType.GasMotorcycle:
+                    (card.Vehicle as Motorcycle).SetProperty(i_Pair);
+                    break;
+                case VehicleFactory.VehicleType.Truck:
+                    (card.Vehicle as Truck).SetProperty(i_Pair);
+                    break;
+            }
+        }
 
         //TODO change to int
         public StringBuilder GetSortedLicensePlates(int i_State)
         {
             StringBuilder licensePlates = new StringBuilder();
-            
 
             foreach (KeyValuePair<string, CustomerCard> entry in m_CustomerCards)
             {
