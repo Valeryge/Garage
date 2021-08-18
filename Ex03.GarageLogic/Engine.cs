@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
                     m_CurrentEnergyAmount = value;
                 } else
                 {
-                    // TODO: Out of range
+                    throw new ValueOutOfRangeException(String.Format("Energy amount cant be over {0}", MaxEnergyAmount), 0, MaxEnergyAmount);
                 }
             }
         }
@@ -37,7 +37,6 @@ namespace Ex03.GarageLogic
             get { return m_MaxEnergyAmount;  }
             set { m_MaxEnergyAmount = value; }
         }
-
 
         public float GetEnergyPercent()
         {

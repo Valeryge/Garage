@@ -21,8 +21,6 @@ namespace Ex03.GarageLogic
        
         public Car(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate): base(i_Properties, i_LicensePlate)
         {
-            
-            
         }
 
         private void setColor(string i_Color)

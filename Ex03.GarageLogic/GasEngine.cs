@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
                 m_CurrentEnergyAmount += i_FuelAmount;
             } else
             {
-                // TODO: Expetion
+                throw new ValueOutOfRangeException(String.Format("Too much fuel, max fuel capacity is {0} litres"), 0, MaxEnergyAmount);
             }
         }
 
