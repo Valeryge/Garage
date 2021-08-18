@@ -13,11 +13,8 @@ namespace Ex03.GarageLogic
 
         public GarageManager() { }
 
-        //TODO return bool if already exists
-        public bool AddVehicleToGarage(string i_LicensePlate, string i_CustomerName, string i_CustomerPhone, int i_VehicleType)
+        public void AddVehicleToGarage(string i_LicensePlate, string i_CustomerName, string i_CustomerPhone, int i_VehicleType)
         {
-            bool added = false;
-
             if (IsVehicleInGarage(i_LicensePlate))
             {
                 CustomerCard card;
@@ -29,10 +26,7 @@ namespace Ex03.GarageLogic
                 Vehicle vehicle = m_Factory.CreateVehicle(i_VehicleType, i_LicensePlate);
                 m_CustomerCards[i_LicensePlate] = new CustomerCard(vehicle, i_CustomerName, i_CustomerPhone);
                 vehicle.LicensePlate = i_LicensePlate;
-                added = true;
             }
-
-            return added;
         }
 
         public void ChangeVehicleRepairState(string i_LicensePlate, int i_RepairState)
@@ -102,6 +96,9 @@ namespace Ex03.GarageLogic
             if (card != null)
             {
                 card.Vehicle.SetSharedProperty(i_Pair);
+            } else
+            {
+                throw new ArgumentException("Vehicle not in garage");
             }
         }
 
@@ -173,44 +170,21 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void AddPressureToTires(string i_LicensePlate, float i_Pressure)
+        //TODO: chnage in UI - delete 2nd paraeter
+        public void AddPressureToTires(string i_LicensePlate)
         {
             CustomerCard card;
 
             m_CustomerCards.TryGetValue(i_LicensePlate, out card);
             if (card != null)
             {
-                card.Vehicle.AddPressureToTires(i_Pressure);
+                card.Vehicle.AddPressureToTires();
             }
-        }
-
-        private bool isValidFuelType(int i_FuelType)
-        {
-            bool isValid = false;
-
-            if (Enum.IsDefined(typeof(VehicleFactory.FuelType), i_FuelType))
-            {
-                isValid = true;
-            }
-
-            return isValid;
         }
 
         public bool IsVehicleInGarage(string i_LisencePlate)
         {
             return m_CustomerCards.ContainsKey(i_LisencePlate);
-        }
-
-        private bool isValidVehicleType(int i_Type)
-        {
-            bool isValid = false;
-
-            if (Enum.IsDefined(typeof(VehicleFactory.VehicleType), i_Type))
-            {
-                isValid = true;
-            }
-
-            return isValid;
         }
 
         public List<string> GetAllLicensePlates()

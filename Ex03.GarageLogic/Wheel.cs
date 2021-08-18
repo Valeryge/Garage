@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
                     m_Pressure = value;
                 } else
                 {
-                    // TODO: out of range
+                    throw new ValueOutOfRangeException(String.Format("Pressure cant be higher than {0}", MaxPressure), 0, MaxPressure);
                 }
             }
         }

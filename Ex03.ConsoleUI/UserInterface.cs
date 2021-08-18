@@ -63,7 +63,7 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Good bye");
                         break;
                 }
-                bool a = true;
+                Console.ReadLine();
                 System.Console.Clear();
             }
         }
@@ -151,7 +151,7 @@ namespace Ex03.ConsoleUI
                 float pressure = Utils.GetFloatFromUser(0, "Air Presurre cannot be negative");
                 try
                 {
-                    m_GarageManager.AddPressureToTires(licencePlate, pressure);
+                    m_GarageManager.AddPressureToTires(licencePlate);
                 }
                 catch (Exception e)
                 {

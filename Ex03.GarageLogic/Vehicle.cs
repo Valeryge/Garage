@@ -118,10 +118,10 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void AddPressureToTires(float i_Pressure)
+        public void AddPressureToTires()
         {
             foreach (Wheel wheel in m_Wheels) {
-                wheel.AddPressure(i_Pressure);
+                wheel.SetPressureToMax();
             }
         }
 

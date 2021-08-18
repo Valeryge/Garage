@@ -39,7 +39,6 @@ namespace Ex03.GarageLogic
             set { m_MaxEnergyAmount = value; }
         }
 
-
         public float GetEnergyPercent()
         {
             return m_CurrentEnergyAmount / m_MaxEnergyAmount * 100;
