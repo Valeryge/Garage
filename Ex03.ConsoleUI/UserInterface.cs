@@ -238,17 +238,16 @@ namespace Ex03.ConsoleUI
                 m_GarageManager.AddVehicleToGarage(licensePlate, name, phone, vehicleType);
                 List<string> sharedAttributes = m_GarageManager.GetSharedPropertyNames();
 
-                foreach (string property in sharedAttributes)
+                foreach (string attribute in sharedAttributes)
                 {
                     bool toContinue = true;
-                    Console.WriteLine("Please enter {0}", property);
+                    PrintAttributeRequest(attribute);
                     while (toContinue)
                     {
-                        //TODO: add check if enum if yes show options
                         string input = Console.ReadLine();
                         try
                         {
-                            m_GarageManager.SetSharedVehicleProperty(licensePlate, new KeyValuePair<string, string>(property, input));
+                            m_GarageManager.SetSharedVehicleProperty(licensePlate, new KeyValuePair<string, string>(attribute, input));
                             toContinue = false;
                         }
                         catch (Exception error)
@@ -264,7 +263,7 @@ namespace Ex03.ConsoleUI
                 foreach (string attribute in uniqueAttributes)
                 {
                     bool toContinue = true;
-                    Console.WriteLine(String.Format("Please enter {0}\n", attribute));
+                    PrintAttributeRequest(attribute);
                     while (toContinue)
                     {
                         try
@@ -279,6 +278,15 @@ namespace Ex03.ConsoleUI
                         }
                     }
                 }
+            }
+        }
+
+        private void PrintAttributeRequest(string attribute)
+        {
+            Console.WriteLine(String.Format("Please enter {0}\n", attribute));
+            if(attribute == "color")
+            {
+                PrintColorOptionsString();
             }
         }
 
