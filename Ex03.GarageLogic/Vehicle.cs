@@ -49,6 +49,19 @@ namespace Ex03.GarageLogic
             m_IsElectric = i_Properties.m_IsElectric;
         }
 
+        public float EnergyPercentage
+        {
+            get
+            {
+                float percentage = 0;
+                if (m_Engine != null)
+                {
+                    percentage = m_Engine.GetEnergyPercent();
+                }
+                return percentage;
+            }
+        }
+
         protected void setCurrentEnergyAmount(string i_Amount)
         {
             float number;
@@ -70,9 +83,6 @@ namespace Ex03.GarageLogic
             {
                 case "model name":
                     m_ModelName = i_Pair.Value;
-                    break;
-                case "energy percentage":
-                    setEnergyPercentage(i_Pair.Value);
                     break;
                 case "air in tires":
                     SetTiresPressure(i_Pair.Value);
@@ -107,11 +117,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Not a number");
             }
-        }
-
-        private void setEnergyPercentage(string i_Percentage)
-        {
-            //TODO : caculate
         }
 
         public void AddPressureToTires(float i_Pressure)
