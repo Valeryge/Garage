@@ -22,13 +22,13 @@ namespace Ex03.GarageLogic
             get { return m_CurrentEnergyAmount;  }
             set 
             {
-                if (value <= m_MaxEnergyAmount)
+                if (value >= 0 && value <= m_MaxEnergyAmount)
                 {
                     m_CurrentEnergyAmount = value;
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException("Energy amount is more then max", 0, m_MaxEnergyAmount);
+                    throw new ValueOutOfRangeException("Energy amount is out of range", 0, m_MaxEnergyAmount);
                 }
             }
         }
