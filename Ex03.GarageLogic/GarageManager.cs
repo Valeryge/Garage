@@ -13,11 +13,8 @@ namespace Ex03.GarageLogic
 
         public GarageManager() { }
 
-        //TODO return bool if already exists
-        public bool AddVehicleToGarage(string i_LicensePlate, string i_CustomerName, string i_CustomerPhone, int i_VehicleType)
+        public void AddVehicleToGarage(string i_LicensePlate, string i_CustomerName, string i_CustomerPhone, int i_VehicleType)
         {
-            bool added = false;
-
             if (IsVehicleInGarage(i_LicensePlate))
             {
                 CustomerCard card;
@@ -29,10 +26,7 @@ namespace Ex03.GarageLogic
                 Vehicle vehicle = m_Factory.CreateVehicle(i_VehicleType, i_LicensePlate);
                 m_CustomerCards[i_LicensePlate] = new CustomerCard(vehicle, i_CustomerName, i_CustomerPhone);
                 vehicle.LicensePlate = i_LicensePlate;
-                added = true;
             }
-
-            return added;
         }
 
         public void ChangeVehicleRepairState(string i_LicensePlate, int i_RepairState)
