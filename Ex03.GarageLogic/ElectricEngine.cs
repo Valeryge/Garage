@@ -19,8 +19,15 @@ namespace Ex03.GarageLogic
                 m_CurrentEnergyAmount += i_HoursToCharge;
             } else
             {
-                //TODO: Expetion
+                throw new ValueOutOfRangeException(String.Format("Battery overload- can charge only up to {0}", MaxEnergyAmount), 0, MaxEnergyAmount);
             }
+        }
+
+        public string GetData()
+        {
+            string data = String.Format("Current Capacity: {0}, Max capacity: {1}", m_CurrentEnergyAmount, m_MaxEnergyAmount);
+
+            return data;
         }
     }
 }

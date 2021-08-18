@@ -29,9 +29,6 @@ namespace Ex03.GarageLogic
                 case "gasAmount":
                     setCurrentEnergyAmount(i_Pair.Value);
                     break;
-                case "airInTires":
-                    SetTiresPressure(i_Pair.Value);
-                    break;
             }
         }
 
@@ -69,6 +66,16 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Enter 1 for yes and 0 for true");
             }
+        }
+
+        public Dictionary<string, object> GetTruckData()
+        {
+            Dictionary<string, object> data = GetVehicleData();
+
+            data.Add("Has Dangerous substences", m_IsDangerSubstence);
+            data.Add("Max weight", m_MaxWeight);
+
+            return data;
         }
     }
 }

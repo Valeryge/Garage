@@ -12,17 +12,15 @@ namespace Ex03.GarageLogic
         private string m_CustomerName;
         private string m_PhoneNumber;
         private RepairState m_VehicleState;
-        private VehicleFactory.VehicleType m_VehicleType;
-
-        public VehicleFactory.VehicleType VehicleType
-        {
-            get { return m_VehicleType;  }
-        }
 
         public RepairState VehicleState
         {
             get { return m_VehicleState; }
-            set { m_VehicleState = value; }
+            set {
+                if (Enum.IsDefined(typeof(RepairState), value)) {
+                    m_VehicleState = value;
+                }
+            }
         }
 
         public Vehicle Vehicle
@@ -32,18 +30,17 @@ namespace Ex03.GarageLogic
 
         public enum RepairState
         {
-            InProgress = 0,
-            Fixed = 1,
-            Paid = 2
+            InProgress = 1,
+            Fixed = 2,
+            Paid = 3
         }
 
-        public CustomerCard(Vehicle i_Vehicle, string i_CustomerName, string i_PhoneNumber, VehicleFactory.VehicleType i_VehicleType)
+        public CustomerCard(Vehicle i_Vehicle, string i_CustomerName, string i_PhoneNumber)
         {
             m_CustomerName = i_CustomerName;
             m_PhoneNumber = i_PhoneNumber;
             m_Vehicle = i_Vehicle;
             m_VehicleState = RepairState.InProgress;
-            m_VehicleType = i_VehicleType;
         }
     }
 }

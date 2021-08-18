@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
 
         public Motorcycle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate) : base(i_Properties, i_LicensePlate)
         {
-
+            // TODO:: fill
         }
 
         public void SetProperty(KeyValuePair<string, string> i_Pair)
@@ -34,9 +34,6 @@ namespace Ex03.GarageLogic
                 case "gasAmount":
                 case "currentBattary":
                     setCurrentEnergyAmount(i_Pair.Value);
-                    break;
-                case "airInTires":
-                    SetTiresPressure(i_Pair.Value);
                     break;
             }
         }
@@ -96,5 +93,14 @@ namespace Ex03.GarageLogic
             return isValid;
         }
 
+        public Dictionary<string, object> GetMotorcycleData()
+        {
+            Dictionary<string, object> data = GetVehicleData();
+
+            data.Add("License Type", m_LicenseType);
+            data.Add("Engine Volume", m_EngineVolume);
+
+            return data;
+        }
     }
 }

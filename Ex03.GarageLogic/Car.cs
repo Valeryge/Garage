@@ -81,9 +81,6 @@ namespace Ex03.GarageLogic
                 case "gasAmount":
                     setCurrentEnergyAmount(i_Pair.Value);
                     break;
-                case "airInTires":
-                    SetTiresPressure(i_Pair.Value);
-                    break;
             } 
         }
 
@@ -97,6 +94,16 @@ namespace Ex03.GarageLogic
             }
 
             return isValid;
+        }
+
+        public Dictionary<string, object> GetCarData()
+        {
+            Dictionary<string, object> data = GetVehicleData();
+
+            data.Add("Color", m_Color);
+            data.Add("Number of doors", m_NumOfDoors);
+
+            return data;
         }
     }
 }
