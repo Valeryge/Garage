@@ -8,14 +8,39 @@ namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-        string m_Manufactor;
-        float m_Pressure;
-        float m_MaxPressure;
+        private string m_Manufactor;
+        private float m_Pressure;
+        private float m_MaxPressure;
 
-        public Wheel(float i_MaxPressure, string i_Manufactor)
+        public float MaxPressure
+        {
+            get { return m_MaxPressure; }
+            set { m_MaxPressure = value; }
+        }
+
+        public string Manufactor
+        {
+            get { return m_Manufactor; }
+            set { m_Manufactor = value; }
+        }
+
+        public float Pressure
+        {
+            set
+            {
+                if (value <= m_MaxPressure)
+                {
+                    m_Pressure = value;
+                } else
+                {
+                    // TODO: out of range
+                }
+            }
+        }
+
+        public Wheel(float i_MaxPressure) 
         {
             m_MaxPressure = i_MaxPressure;
-            m_Manufactor = i_Manufactor;
         }
 
         public void AddPressure(float i_PressureToAdd) 
@@ -26,6 +51,13 @@ namespace Ex03.GarageLogic
         public void SetPressureToMax()
         {
             m_Pressure = m_MaxPressure;
+        }
+
+        public string GetData()
+        {
+            string data = String.Format("Manufactor: {0}, Pressure: {1}, Max Pressure: {2}", m_Manufactor, m_Pressure, m_MaxPressure);
+
+            return data;
         }
     }
 }

@@ -9,7 +9,13 @@ namespace Ex03.GarageLogic
     public class VehicleFactory
     {
         private Dictionary<VehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<VehicleType, VehicleProperties>();
-        private Dictionary<VehicleType, List<string>> m_UniqueDataDitionary = new Dictionary<VehicleType, List<string>>();
+        private Dictionary<VehicleType, List<string>> m_UniqueDataDictionary = new Dictionary<VehicleType, List<string>>();
+        private List<string> m_SharedPropertiesNames = new List<string>(new string[] { "model name", "energy percentage", "air in tires", "wheel manufactor" });
+
+        public List<string> SharedPropertiesNames
+        {
+            get { return m_SharedPropertiesNames; }
+        }
 
         public class VehicleProperties
         {
@@ -18,14 +24,16 @@ namespace Ex03.GarageLogic
             public float m_TankSize;
             public FuelType m_FuelType;
             public bool m_IsElectric;
+            public VehicleType m_VehicleType;
 
-            public VehicleProperties(int i_NumOfWheels,float i_MaxPressure, float i_TankSize, FuelType i_Type, bool i_IsElectric)
+            public VehicleProperties(int i_NumOfWheels,float i_MaxPressure, float i_TankSize, FuelType i_FuelType, bool i_IsElectric, VehicleType i_VehicleType)
             {
                 m_NumOfWheels = i_NumOfWheels;
                 m_MaxPressure = i_MaxPressure;
                 m_TankSize = i_TankSize;
-                m_FuelType = i_Type;
+                m_FuelType = i_FuelType;
                 m_IsElectric = i_IsElectric;
+                m_VehicleType = i_VehicleType;
             }
         }
 
@@ -54,20 +62,20 @@ namespace Ex03.GarageLogic
 
         private void initSupportedVehicles()
         {
-            m_SupportedVehiclesInGarage.Add(VehicleType.GasMotorcycle, new VehicleProperties(2, 30f, 6f, FuelType.Octan95, false));
-            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricMotorcycle, new VehicleProperties(2, 30f, 1.8f, FuelType.None, true));
-            m_SupportedVehiclesInGarage.Add(VehicleType.GasCar, new VehicleProperties(4, 32f, 45f, FuelType.Octan95, false));
-            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricCar, new VehicleProperties(4, 32f, 3.2f, FuelType.None, true));
-            m_SupportedVehiclesInGarage.Add(VehicleType.Truck, new VehicleProperties(16, 26f, 120f, FuelType.Soler, false));
+            m_SupportedVehiclesInGarage.Add(VehicleType.GasMotorcycle, new VehicleProperties(2, 30f, 6f, FuelType.Octan95, false, VehicleType.GasMotorcycle));
+            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricMotorcycle, new VehicleProperties(2, 30f, 1.8f, FuelType.None, true, VehicleType.ElectricMotorcycle));
+            m_SupportedVehiclesInGarage.Add(VehicleType.GasCar, new VehicleProperties(4, 32f, 45f, FuelType.Octan95, false, VehicleType.GasCar));
+            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricCar, new VehicleProperties(4, 32f, 3.2f, FuelType.None, true, VehicleType.ElectricCar));
+            m_SupportedVehiclesInGarage.Add(VehicleType.Truck, new VehicleProperties(16, 26f, 120f, FuelType.Soler, false, VehicleType.Truck));
         }
 
         private void initVehicleExtraData()
         {
-            m_UniqueDataDitionary.Add(VehicleType.GasCar, new List<string>(new string[] { "color", "numberOfDoors", "gasAmount" }));
-            m_UniqueDataDitionary.Add(VehicleType.ElectricCar, new List<string>(new string[] { "color", "numberOfDoors", "currentBattery" }));
-            m_UniqueDataDitionary.Add(VehicleType.GasMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "currentBattary" }));
-            m_UniqueDataDitionary.Add(VehicleType.ElectricMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "gasAmount" }));
-            m_UniqueDataDitionary.Add(VehicleType.Truck, new List<string>(new string[] { "isDangerSubstance", "maxWeight" }));
+            m_UniqueDataDictionary.Add(VehicleType.GasCar, new List<string>(new string[] { "color", "numberOfDoors", "gasAmount" }));
+            m_UniqueDataDictionary.Add(VehicleType.ElectricCar, new List<string>(new string[] { "color", "numberOfDoors", "currentBattery" }));
+            m_UniqueDataDictionary.Add(VehicleType.GasMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "currentBattary"}));
+            m_UniqueDataDictionary.Add(VehicleType.ElectricMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "gasAmount"}));
+            m_UniqueDataDictionary.Add(VehicleType.Truck, new List<string>(new string[] { "isDangerSubstance", "maxWeight", "gasAmount" }));
         }
 
         public Vehicle CreateVehicle(int i_Type, string i_LicensePlate)
@@ -93,7 +101,7 @@ namespace Ex03.GarageLogic
 
         public List<string> GetUniqueDataFields(VehicleType i_Type)
         {
-            return m_UniqueDataDitionary[i_Type];
+            return m_UniqueDataDictionary[i_Type];
         }
     }
 }

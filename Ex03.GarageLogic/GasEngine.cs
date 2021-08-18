@@ -26,5 +26,12 @@ namespace Ex03.GarageLogic
                 // TODO: Expetion
             }
         }
+
+        public string GetData()
+        {
+            string data = String.Format("Fuel Type: {0}, Current Capacity: {1}, Max capacity: {2}", m_FuelType, m_CurrentEnergyAmount, m_MaxEnergyAmount);
+
+            return data;
+        }
     }
 }
