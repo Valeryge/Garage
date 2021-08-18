@@ -25,9 +25,10 @@ namespace Ex03.GarageLogic
                 if (value <= m_MaxEnergyAmount)
                 {
                     m_CurrentEnergyAmount = value;
-                } else
+                }
+                else
                 {
-                    // TODO: Out of range
+                    throw new ValueOutOfRangeException("Energy amount is more then max", 0, m_MaxEnergyAmount);
                 }
             }
         }
