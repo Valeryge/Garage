@@ -174,18 +174,21 @@ namespace Ex03.ConsoleUI
                 int newRepairState = Utils.GetNumberFromUser(1,
                     Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
                     "Invalid repair state");
-                m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+                try
+                {
+                    m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 PrintVichelDidntFound();
             }
         }
-
-        private void PrintVichelDidntFound()
-        {
-            Console.WriteLine("Didn't find a vichel with this plate number");
-        }
+     
         private void PrintAllVichelsPlateNumbers()
         {
             Console.WriteLine("Enter new filter status:");
@@ -195,10 +198,16 @@ namespace Ex03.ConsoleUI
               Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
               "Invalid repair state");
             List<string> plates = repairStatus == 0 ? m_GarageManager.GetAllLicensePlates() : m_GarageManager.GetSortedLicensePlates(repairStatus);
-
-            foreach(string plate in plates)
+            if (plates == null || plates.Count == 0)
             {
-                Console.WriteLine(plate);
+                Console.WriteLine("No vichel found in this status");
+            }
+            else
+            {
+                foreach (string plate in plates)
+                {
+                    Console.WriteLine(plate);
+                }
             }
         }
 
@@ -207,8 +216,14 @@ namespace Ex03.ConsoleUI
             string licensePlate = GetLicensePlateNumber(out bool alreadyExists);
             if (alreadyExists)
             {
-                m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
-                Console.WriteLine("Changed repair status to in repair");
+                try
+                {
+                    m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
+                    Console.WriteLine("Changed repair status to in repair");
+                }catch(ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
@@ -223,17 +238,16 @@ namespace Ex03.ConsoleUI
                 m_GarageManager.AddVehicleToGarage(licensePlate, name, phone, vehicleType);
                 List<string> sharedAttributes = m_GarageManager.GetSharedPropertyNames();
 
-                foreach (string property in sharedAttributes)
+                foreach (string attribute in sharedAttributes)
                 {
                     bool toContinue = true;
-                    Console.WriteLine("Please enter {0}", property);
+                    PrintAttributeRequest(attribute);
                     while (toContinue)
                     {
-                        //TODO: add check if enum if yes show options
                         string input = Console.ReadLine();
                         try
                         {
-                            m_GarageManager.SetSharedVehicleProperty(licensePlate, new KeyValuePair<string, string>(property, input));
+                            m_GarageManager.SetSharedVehicleProperty(licensePlate, new KeyValuePair<string, string>(attribute, input));
                             toContinue = false;
                         }
                         catch (Exception error)
@@ -249,7 +263,7 @@ namespace Ex03.ConsoleUI
                 foreach (string attribute in uniqueAttributes)
                 {
                     bool toContinue = true;
-                    Console.WriteLine(String.Format("Please enter {0}\n", attribute));
+                    PrintAttributeRequest(attribute);
                     while (toContinue)
                     {
                         try
@@ -267,12 +281,26 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        private void PrintAttributeRequest(string attribute)
+        {
+            Console.WriteLine(String.Format("Please enter {0}\n", attribute));
+            if(attribute == "color")
+            {
+                PrintColorOptionsString();
+            }
+        }
+
         private string GetLicensePlateNumber(out bool io_found)
         {
             Console.WriteLine("Enter vehicle license plate number:");
             string licensePlate = Console.ReadLine();
             io_found = m_GarageManager.IsVehicleInGarage(licensePlate);
             return licensePlate;
+        }
+
+        private void PrintVichelDidntFound()
+        {
+            Console.WriteLine("Didn't find a vichel with this plate number");
         }
 
         private void PrintVehicleTypeOptionsString()

@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<VehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<VehicleType, VehicleProperties>();
         private Dictionary<VehicleType, List<string>> m_UniqueDataDictionary = new Dictionary<VehicleType, List<string>>();
-        private List<string> m_SharedPropertiesNames = new List<string>(new string[] { "model name", "energy percentage", "air in tires", "wheel manufactor" });
+        private List<string> m_SharedPropertiesNames = new List<string>(new string[] { "model name", "air in tires", "wheel manufactor" });
 
         public List<string> SharedPropertiesNames
         {
