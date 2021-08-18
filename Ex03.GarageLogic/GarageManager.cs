@@ -130,6 +130,7 @@ namespace Ex03.GarageLogic
             return plates;
         }
 
+        
         public void ChargeElectricVehicle(string i_LicensePlate, int i_MinutesForCharge)
         {
             CustomerCard card = null;

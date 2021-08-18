@@ -70,79 +70,122 @@ namespace Ex03.ConsoleUI
 
         private void PrintVehicle()
         {
-            Console.WriteLine("Enter vehicle license plate number:");
-            string licencePlate = Console.ReadLine();
-            Dictionary<string, object> data = m_GarageManager.GetVehicleData(licencePlate);
-            foreach (KeyValuePair<string, object> entry in data)
+            string licencePlate = GetLicensePlateNumber(out bool found);
+            if (found)
             {
-                Console.WriteLine("{0}: {1}", entry.Key, entry.Value.ToString());
+                Dictionary<string, object> data = m_GarageManager.GetVehicleData(licencePlate);
+                if (data == null)
+                {
+                    Console.WriteLine("Vichel data not found");
+                }
+                else
+                {
+                    foreach (KeyValuePair<string, object> entry in data)
+                    {
+                        Console.WriteLine("{0}: {1}", entry.Key, entry.Value.ToString());
+                    }
+                }
+            }
+            else
+            {
+                PrintVichelDidntFound();
             }
         }
 
         private void ChargeVehicle()
         {
-            Console.WriteLine("Enter vehicle licence plate number:");
-            string licencePlate = Console.ReadLine();
-            Console.WriteLine("Enter charge minutes to add:");
-            int chargeMinutes = Utils.GetNumberFromUser(0, "Invalid charge minutes");
-            try
+            string licencePlate = GetLicensePlateNumber(out bool found);
+            if (found)
             {
-                m_GarageManager.ChargeElectricVehicle(licencePlate, chargeMinutes);
-            } catch (Exception e)
+                Console.WriteLine("Enter charge minutes to add:");
+                int chargeMinutes = Utils.GetNumberFromUser(0, "Invalid charge minutes");
+                try
+                {
+                    m_GarageManager.ChargeElectricVehicle(licencePlate, chargeMinutes);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            else
             {
-                Console.WriteLine(e.Message);
+                PrintVichelDidntFound();
             }
         }
 
         private void AddFuelToVichel()
         {
-            Console.WriteLine("Enter vehicle licence plate number:");
-            string licencePlate = Console.ReadLine();
-            Console.WriteLine("Enter fuel type:");
-            PrintFuelOptionsString();
-            int fuelType = Utils.GetNumberFromUser(1,
-              Enum.GetValues(typeof(GarageLogic.VehicleFactory.FuelType)).Length,
-              "Invalid fuel option");
-            Console.WriteLine("Enter fuel amount to add (liters):");
-            float fuleToAdd = Utils.GetFloatFromUser(0, "Invalid fuel number");
-            try
+
+            string licencePlate = GetLicensePlateNumber(out bool found);
+            if (found)
             {
-                m_GarageManager.FuelGasDrivenVehicle(licencePlate, fuelType, fuleToAdd);
+                Console.WriteLine("Enter fuel type:");
+                PrintFuelOptionsString();
+                int fuelType = Utils.GetNumberFromUser(1,
+                  Enum.GetValues(typeof(GarageLogic.VehicleFactory.FuelType)).Length,
+                  "Invalid fuel option");
+                Console.WriteLine("Enter fuel amount to add (liters):");
+                float fuleToAdd = Utils.GetFloatFromUser(0, "Invalid fuel number");
+                try
+                {
+                    m_GarageManager.FuelGasDrivenVehicle(licencePlate, fuelType, fuleToAdd);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e.Message);
+                PrintVichelDidntFound();
             }
         }
 
         private void InflateAirWheels()
         {
-            Console.WriteLine("Enter vehicle licence plate number:");
-            string licencePlate = Console.ReadLine();
-            Console.WriteLine("Enter vehicle licence plate number:");
-            float pressure = Utils.GetFloatFromUser(0, "Air Presurre cannot be negative");
-            try
+            string licencePlate = GetLicensePlateNumber(out bool found);
+            if (found)
             {
-                m_GarageManager.AddPressureToTires(licencePlate, pressure);
+                Console.WriteLine("Enter vehicle air presure number:");
+                float pressure = Utils.GetFloatFromUser(0, "Air Presurre cannot be negative");
+                try
+                {
+                    m_GarageManager.AddPressureToTires(licencePlate, pressure);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e.Message);
+                PrintVichelDidntFound();
             }
         }
 
         private void ChangeVehicleStatus()
         {
-            Console.WriteLine("Enter vehicle licence plate number:");
-            string licencePlate = Console.ReadLine();
-            Console.WriteLine("Enter new vehicle status:");
-            PrintRepairStates();
-            int newRepairState = Utils.GetNumberFromUser(1,
-                Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
-                "Invalid repair state");
-            m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+            string licencePlate = GetLicensePlateNumber(out bool found);
+            if (found)
+            {
+                Console.WriteLine("Enter new vehicle status:");
+                PrintRepairStates();
+                int newRepairState = Utils.GetNumberFromUser(1,
+                    Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
+                    "Invalid repair state");
+                m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+            }
+            else
+            {
+                PrintVichelDidntFound();
+            }
         }
 
+        private void PrintVichelDidntFound()
+        {
+            Console.WriteLine("Didn't find a vichel with this plate number");
+        }
         private void PrintAllVichelsPlateNumbers()
         {
             Console.WriteLine("Enter new filter status:");
@@ -161,10 +204,8 @@ namespace Ex03.ConsoleUI
 
         private void AddVehicleToGarage()
         {
-            Console.WriteLine("Enter vehicle licence plate number:");
-            string licensePlate = Console.ReadLine();
-            bool isVehicleExist = m_GarageManager.IsVehicleInGarage(licensePlate);
-            if (isVehicleExist)
+            string licensePlate = GetLicensePlateNumber(out bool alreadyExists);
+            if (alreadyExists)
             {
                 m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
                 Console.WriteLine("Changed repair status to in repair");
@@ -226,22 +267,20 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private bool IsVehicleInGarage(string licencePlate)
+        private string GetLicensePlateNumber(out bool io_found)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter vehicle license plate number:");
+            string licensePlate = Console.ReadLine();
+            io_found = m_GarageManager.IsVehicleInGarage(licensePlate);
+            return licensePlate;
         }
 
-        private int GetValidServiceChoice()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PrintVehicleTypeOptionsString()
+        private void PrintVehicleTypeOptionsString()
         {
             Utils.PrintEnumValues(typeof(GarageLogic.VehicleFactory.VehicleType));
         }
 
-        public void PrintColorOptionsString()
+        private void PrintColorOptionsString()
         {
             Utils.PrintEnumValues(typeof(GarageLogic.Car.Color));
         }
