@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
-        public enum Color
+        public enum eColor
         {
             Black = 1,
             White = 2,
@@ -16,7 +14,7 @@ namespace Ex03.GarageLogic
             Silver = 4
         }
 
-        public Color m_Color;
+        public eColor m_Color;
         public int m_NumOfDoors;
        
         public Car(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate): base(i_Properties, i_LicensePlate)
@@ -32,7 +30,7 @@ namespace Ex03.GarageLogic
             {
                 if (isValidColor(number))
                 {
-                    m_Color = (Color)number;
+                    m_Color = (eColor)number;
                 } else
                 {
                     throw new ArgumentException("Not Valid Color Enum");
@@ -77,21 +75,14 @@ namespace Ex03.GarageLogic
                     break;
                 case "currentBattery":
                 case "gasAmount":
-                    setCurrentEnergyAmount(i_Pair.Value);
+                    SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             } 
         }
 
         private bool isValidColor(int i_Color)
         {
-            bool isValid = false;
-
-            if (Enum.IsDefined(typeof(Color), i_Color))
-            {
-                isValid = true;
-            }
-
-            return isValid;
+            return Enum.IsDefined(typeof(eColor), i_Color);
         }
 
         public Dictionary<string, object> GetCarData()

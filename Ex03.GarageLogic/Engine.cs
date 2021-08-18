@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Ex03.GarageLogic
 {
     public abstract class Engine
@@ -11,7 +6,7 @@ namespace Ex03.GarageLogic
         protected float m_MaxEnergyAmount;
         protected float m_CurrentEnergyAmount;
 
-        public Engine(float i_MaxEnergyAmount)
+        protected Engine(float i_MaxEnergyAmount)
         {
             m_MaxEnergyAmount = i_MaxEnergyAmount;
             m_CurrentEnergyAmount = 0;
@@ -19,7 +14,10 @@ namespace Ex03.GarageLogic
 
         public float CurrentEnergyAmount
         {
-            get { return m_CurrentEnergyAmount;  }
+            get
+            {
+                return m_CurrentEnergyAmount;
+            }
             set 
             {
                 if (value >= 0 && value <= m_MaxEnergyAmount)
@@ -35,8 +33,14 @@ namespace Ex03.GarageLogic
         
         public float MaxEnergyAmount
         {
-            get { return m_MaxEnergyAmount;  }
-            set { m_MaxEnergyAmount = value; }
+            get
+            {
+                return m_MaxEnergyAmount;
+            }
+            set
+            {
+                m_MaxEnergyAmount = value;
+            }
         }
 
         public float GetEnergyPercent()

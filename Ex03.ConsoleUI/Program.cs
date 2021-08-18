@@ -12,7 +12,7 @@ namespace Ex03.ConsoleUI
         {
             UserInterface user = new UserInterface();
 
-            user.showMenu();
+            user.ShowMenu();
         }
     }
 }

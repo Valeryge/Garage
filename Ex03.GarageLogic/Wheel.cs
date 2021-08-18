@@ -1,27 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-        private string m_Manufactor;
+        private string m_Manufacture;
         private float m_Pressure;
         private float m_MaxPressure;
 
         public float MaxPressure
         {
-            get { return m_MaxPressure; }
-            set { m_MaxPressure = value; }
+            get
+            {
+                return m_MaxPressure;
+            }
+            set
+            {
+                m_MaxPressure = value;
+            }
         }
 
-        public string Manufactor
+        public string Manufacture
         {
-            get { return m_Manufactor; }
-            set { m_Manufactor = value; }
+            get
+            {
+                return m_Manufacture;
+            }
+            set
+            {
+                m_Manufacture = value;
+            }
         }
 
         public float Pressure
@@ -55,7 +63,7 @@ namespace Ex03.GarageLogic
 
         public string GetData()
         {
-            string data = String.Format("Manufactor: {0}, Pressure: {1}, Max Pressure: {2}", m_Manufactor, m_Pressure, m_MaxPressure);
+            string data = String.Format("Manufacture: {0}, Pressure: {1}, Max Pressure: {2}", m_Manufacture, m_Pressure, m_MaxPressure);
 
             return data;
         }

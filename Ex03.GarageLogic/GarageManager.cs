@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        VehicleFactory m_Factory = new VehicleFactory();
+        private VehicleFactory m_Factory = new VehicleFactory();
         public Dictionary<string, CustomerCard> m_CustomerCards = new Dictionary<string, CustomerCard>();
 
         public GarageManager() { }
@@ -17,9 +15,8 @@ namespace Ex03.GarageLogic
         {
             if (IsVehicleInGarage(i_LicensePlate))
             {
-                CustomerCard card;
-                m_CustomerCards.TryGetValue(i_LicensePlate, out card);
-                card.VehicleState = CustomerCard.RepairState.InProgress;
+                m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
+                card.VehicleState = CustomerCard.eRepairState.InProgress;
             }
             else
             {
@@ -31,12 +28,10 @@ namespace Ex03.GarageLogic
 
         public void ChangeVehicleRepairState(string i_LicensePlate, int i_RepairState)
         {
-            CustomerCard card;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
             if (card != null)
             {
-                card.VehicleState = (CustomerCard.RepairState)i_RepairState;
+                card.VehicleState = (CustomerCard.eRepairState)i_RepairState;
             } else
             {
                 throw new ArgumentException("Vehicle not in garage");
@@ -46,20 +41,19 @@ namespace Ex03.GarageLogic
         public Dictionary<string, object> GetVehicleData(string i_LicensePlate)
         {
             Dictionary<string, object> data = null;
-            CustomerCard card;
 
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
             switch (card.Vehicle.VehicleType)
             {
-                case VehicleFactory.VehicleType.ElectricCar:
-                case VehicleFactory.VehicleType.GasCar:
+                case VehicleFactory.eVehicleType.ElectricCar:
+                case VehicleFactory.eVehicleType.GasCar:
                     data = (card.Vehicle as Car).GetCarData();
                     break;
-                case VehicleFactory.VehicleType.ElectricMotorcycle:
-                case VehicleFactory.VehicleType.GasMotorcycle:
+                case VehicleFactory.eVehicleType.ElectricMotorcycle:
+                case VehicleFactory.eVehicleType.GasMotorcycle:
                     data = (card.Vehicle as Motorcycle).GetMotorcycleData();
                     break;
-                case VehicleFactory.VehicleType.Truck:
+                case VehicleFactory.eVehicleType.Truck:
                     data = (card.Vehicle as Truck).GetTruckData();
                     break;
             }
@@ -69,30 +63,33 @@ namespace Ex03.GarageLogic
 
         public void SetProperty(string i_LicensePlate, KeyValuePair<string, string> i_Pair)
         {
-            CustomerCard card;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
-            switch (card.Vehicle.VehicleType)
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
+            if(card != null)
             {
-                case VehicleFactory.VehicleType.ElectricCar:
-                case VehicleFactory.VehicleType.GasCar:
-                    (card.Vehicle as Car).SetProperty(i_Pair);
-                    break;
-                case VehicleFactory.VehicleType.ElectricMotorcycle:
-                case VehicleFactory.VehicleType.GasMotorcycle:
-                    (card.Vehicle as Motorcycle).SetProperty(i_Pair);
-                    break;
-                case VehicleFactory.VehicleType.Truck:
-                    (card.Vehicle as Truck).SetProperty(i_Pair);
-                    break;
+                switch(card.Vehicle.VehicleType)
+                {
+                    case VehicleFactory.eVehicleType.ElectricCar:
+                    case VehicleFactory.eVehicleType.GasCar:
+                        (card.Vehicle as Car).SetProperty(i_Pair);
+                        break;
+                    case VehicleFactory.eVehicleType.ElectricMotorcycle:
+                    case VehicleFactory.eVehicleType.GasMotorcycle:
+                        (card.Vehicle as Motorcycle).SetProperty(i_Pair);
+                        break;
+                    case VehicleFactory.eVehicleType.Truck:
+                        (card.Vehicle as Truck).SetProperty(i_Pair);
+                        break;
+                }
+            }
+            else
+            {
+                //TODO : deal if card is null ?
             }
         }
 
         public void SetSharedVehicleProperty(string i_LicensePlate, KeyValuePair<string, string> i_Pair)
         {
-            CustomerCard card;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
             if (card != null)
             {
                 card.Vehicle.SetSharedProperty(i_Pair);
@@ -109,7 +106,7 @@ namespace Ex03.GarageLogic
 
         public List<string> GetUniqueDataFields(int i_LicenseType)
         {
-            return m_Factory.GetUniqueDataFields((VehicleFactory.VehicleType)i_LicenseType);
+            return m_Factory.GetUniqueDataFields((VehicleFactory.eVehicleType)i_LicenseType);
         }
 
         public List<string> GetSortedLicensePlates(int i_State)
@@ -118,7 +115,7 @@ namespace Ex03.GarageLogic
 
             foreach (KeyValuePair<string, CustomerCard> entry in m_CustomerCards)
             {
-                if ((CustomerCard.RepairState)i_State == entry.Value.VehicleState)
+                if ((CustomerCard.eRepairState)i_State == entry.Value.VehicleState)
                 {
                     plates.Add(entry.Key);
                 }
@@ -130,61 +127,73 @@ namespace Ex03.GarageLogic
         
         public void ChargeElectricVehicle(string i_LicensePlate, int i_MinutesForCharge)
         {
-            CustomerCard card = null;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
-            ElectricEngine engine = card.Vehicle.Engine as ElectricEngine;
-            if (engine == null)
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
+            if(card != null)
             {
-                throw new ArgumentException(String.Format("{0} is not electric", i_LicensePlate));
+                ElectricEngine engine = card.Vehicle.Engine as ElectricEngine;
+                if (engine == null)
+                {
+                    throw new ArgumentException(String.Format("{0} is not electric", i_LicensePlate));
+                }
+
+                if (card != null)
+                {
+                    engine.Charge((float)(i_MinutesForCharge / 60));
+                } else
+                {
+                    throw new ArgumentException(String.Format("{0} is not in garage", i_LicensePlate));
+                }
             }
-
-            if (card != null)
+            else
             {
-                engine.Charge((float)(i_MinutesForCharge / 60));
-            } else
-            {
-                throw new ArgumentException(String.Format("{0} is not in garage", i_LicensePlate));
+                //TODO : deal if card is null ?
             }
         }
 
         public void FuelGasDrivenVehicle(string i_LicensePlate, int i_FuelType, float i_LitresToFill)
         {
-            CustomerCard card = null;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
-            GasEngine engine = card.Vehicle.Engine as GasEngine;
-
-            if (engine == null)
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
+            if(card != null)
             {
-                throw new ArgumentException(String.Format("{0} is not electric", i_LicensePlate));
-            }
+                GasEngine engine = card.Vehicle.Engine as GasEngine;
 
-            if (card != null)
-            {
-                engine.AddFuel(i_LitresToFill, (VehicleFactory.FuelType)i_FuelType);
+                if (engine == null)
+                {
+                    throw new ArgumentException(String.Format("{0} is not electric", i_LicensePlate));
+                }
+
+                if (card != null)
+                {
+                    engine.AddFuel(i_LitresToFill, (VehicleFactory.eFuelType)i_FuelType);
+                }
+                else
+                {
+                    throw new ArgumentException(String.Format("{0} is not in garage", i_LicensePlate));
+                }
             }
             else
             {
-                throw new ArgumentException(String.Format("{0} is not in garage", i_LicensePlate));
+                //TODO : deal if card is null ?
             }
         }
 
         //TODO: chnage in UI - delete 2nd paraeter
         public void AddPressureToTires(string i_LicensePlate)
         {
-            CustomerCard card;
-
-            m_CustomerCards.TryGetValue(i_LicensePlate, out card);
+            m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
             if (card != null)
             {
                 card.Vehicle.AddPressureToTires();
             }
+            else
+            {
+                //TODO : deal if card is null ?
+            }
         }
 
-        public bool IsVehicleInGarage(string i_LisencePlate)
+        public bool IsVehicleInGarage(string i_LicensePlate)
         {
-            return m_CustomerCards.ContainsKey(i_LisencePlate);
+            return m_CustomerCards.ContainsKey(i_LicensePlate);
         }
 
         public List<string> GetAllLicensePlates()
@@ -197,47 +206,6 @@ namespace Ex03.GarageLogic
             }
 
             return plates;
-        }
-
-        public StringBuilder GetVehicleTypeOptionsString() {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(VehicleFactory.VehicleType)))
-            {
-                String name = Enum.GetName(typeof(VehicleFactory.VehicleType), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
-        }
-
-        public StringBuilder GetColorOptionsString()
-        {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(Car.Color)))
-            {
-                String name = Enum.GetName(typeof(Car.Color), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
-        }
-
-        public StringBuilder GetFuelOptionsString()
-        {
-            StringBuilder values = new StringBuilder();
-
-            foreach (int type in Enum.GetValues(typeof(VehicleFactory.FuelType)))
-            {
-                String name = Enum.GetName(typeof(VehicleFactory.FuelType), type);
-                String line = String.Format("{0} - {1}\n", type, name);
-                values.Append(line);
-            }
-
-            return values;
         }
     }   
 }

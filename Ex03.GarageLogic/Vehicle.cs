@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
@@ -12,29 +9,40 @@ namespace Ex03.GarageLogic
         protected string m_LicensePlate;
         protected List<Wheel> m_Wheels = new List<Wheel>();
         protected Engine m_Engine;
-        protected readonly VehicleFactory.VehicleType r_Type;
-        private bool m_IsElectric;
+        protected readonly VehicleFactory.eVehicleType r_Type;
+        public bool m_IsElectric;
 
         public string LicensePlate
         {
-            set { m_LicensePlate = value; }
+            set
+            {
+                m_LicensePlate = value;
+            }
         }
-        public VehicleFactory.VehicleType VehicleType
+        public VehicleFactory.eVehicleType VehicleType
         {
-            get { return r_Type;  }
+            get
+            {
+                return r_Type;
+            }
         }
 
         public Engine Engine
         {
-            get { return m_Engine;  }
+            get
+            {
+                return m_Engine;
+            }
         }
 
         public Vehicle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate)
         {
+            m_LicensePlate = i_LicensePlate;
             if (i_Properties.m_IsElectric)
             {
                 m_Engine = new ElectricEngine(i_Properties.m_TankSize);
-            } else
+            } 
+            else
             {
                 m_Engine = new GasEngine(i_Properties.m_TankSize, i_Properties.m_FuelType);
             }
@@ -61,10 +69,9 @@ namespace Ex03.GarageLogic
             }
         }
 
-        protected void setCurrentEnergyAmount(string i_Amount)
+        protected void SetCurrentEnergyAmount(string i_Amount)
         {
-            float number;
-            bool success = float.TryParse(i_Amount, out number);
+            bool success = float.TryParse(i_Amount, out float number);
 
             if (success)
             {
@@ -86,24 +93,23 @@ namespace Ex03.GarageLogic
                 case "air in tires":
                     SetTiresPressure(i_Pair.Value);
                     break;
-                case "wheel manufactor":
-                    setWheelsManufactor(i_Pair.Value);
+                case "wheel manufacture":
+                    setWheelsManufacture(i_Pair.Value);
                     break;
             }
         }
 
-        private void setWheelsManufactor(string i_Manufactor)
+        private void setWheelsManufacture(string i_Manufacture)
         {
             foreach (Wheel wheel in m_Wheels)
             {
-                wheel.Manufactor = i_Manufactor;
+                wheel.Manufacture = i_Manufacture;
             }
         }
 
         public void SetTiresPressure(string i_Pressure)
         {
-            int number;
-            bool success = int.TryParse(i_Pressure, out number);
+            bool success = int.TryParse(i_Pressure, out int number);
 
             if (success)
             {
@@ -120,7 +126,8 @@ namespace Ex03.GarageLogic
 
         public void AddPressureToTires()
         {
-            foreach (Wheel wheel in m_Wheels) {
+            foreach (Wheel wheel in m_Wheels) 
+            {
                 wheel.SetPressureToMax();
             }
         }

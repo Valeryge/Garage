@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     public class GasEngine : Engine
     {
-        private VehicleFactory.FuelType m_FuelType;
+        private VehicleFactory.eFuelType m_FuelType;
 
-        public GasEngine(float i_TankSize, VehicleFactory.FuelType i_FuelType): base(i_TankSize)
+        public GasEngine(float i_TankSize, VehicleFactory.eFuelType i_FuelType): base(i_TankSize)
         {
             m_FuelType = i_FuelType;
             m_CurrentEnergyAmount = 0;
         }
 
-        public void AddFuel(float i_FuelAmount, VehicleFactory.FuelType i_Type)
+        public void AddFuel(float i_FuelAmount, VehicleFactory.eFuelType i_Type)
         {
             if (i_Type == m_FuelType)
             {

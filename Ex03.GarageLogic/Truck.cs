@@ -8,12 +8,11 @@ namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
-        public bool m_IsDangerSubstence;
+        public bool m_IsDangeSubstances;
         public float m_MaxWeight;
 
         public Truck(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate) : base(i_Properties, i_LicensePlate)
         {
-
         }
 
         public void SetProperty(KeyValuePair<string, string> i_Pair)
@@ -21,21 +20,20 @@ namespace Ex03.GarageLogic
             switch (i_Pair.Key)
             {
                 case "isDangerSubstance":
-                    setIsDangerSubstence(i_Pair.Value);
+                    SetIsDangerSubstances(i_Pair.Value);
                     break;
                 case "maxWeight":
                     setMaxWeight(i_Pair.Value);
                     break;
                 case "gasAmount":
-                    setCurrentEnergyAmount(i_Pair.Value);
+                    SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             }
         }
 
         private void setMaxWeight(string i_Weight)
         {
-            int number;
-            bool success = int.TryParse(i_Weight, out number);
+            bool success = int.TryParse(i_Weight, out int number);
 
             if (success)
             {
@@ -54,17 +52,18 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private void setIsDangerSubstence(string i_IsDanger)
+        public void SetIsDangerSubstances(string i_IsDanger)
         {
-            if (i_IsDanger == "0")
+            switch(i_IsDanger)
             {
-                m_IsDangerSubstence = false;
-            } else if (i_IsDanger == "1")
-            {
-                m_IsDangerSubstence = true;
-            } else
-            {
-                throw new ArgumentException("Enter 1 for yes and 0 for true");
+                case "0":
+                    m_IsDangeSubstances = false;
+                    break;
+                case "1":
+                    m_IsDangeSubstances = true;
+                    break;
+                default:
+                    throw new ArgumentException("Enter 1 for yes and 0 for true");
             }
         }
 
@@ -72,7 +71,7 @@ namespace Ex03.GarageLogic
         {
             Dictionary<string, object> data = GetVehicleData();
 
-            data.Add("Has Dangerous substences", m_IsDangerSubstence);
+            data.Add("Has Dangerous substances", m_IsDangeSubstances);
             data.Add("Max weight", m_MaxWeight);
 
             return data;

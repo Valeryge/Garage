@@ -1,20 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
     public class VehicleFactory
     {
-        private Dictionary<VehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<VehicleType, VehicleProperties>();
-        private Dictionary<VehicleType, List<string>> m_UniqueDataDictionary = new Dictionary<VehicleType, List<string>>();
-        private List<string> m_SharedPropertiesNames = new List<string>(new string[] { "model name", "air in tires", "wheel manufactor" });
+        public enum eFuelType
+        {
+            None = 0,
+            Octan98 = 1,
+            Octan95 = 2,
+            Soler = 3
+        }
+
+        public enum eVehicleType
+        {
+            GasCar = 1,
+            ElectricCar = 2,
+            GasMotorcycle = 3,
+            ElectricMotorcycle = 4,
+            Truck = 5
+        }
+
+        public Dictionary<eVehicleType, VehicleProperties> m_SupportedVehiclesInGarage = new Dictionary<eVehicleType, VehicleProperties>();
+        public Dictionary<eVehicleType, List<string>> m_UniqueDataDictionary = new Dictionary<eVehicleType, List<string>>();
+        public List<string> m_SharedPropertiesNames = new List<string>(new [] { "model name", "air in tires", "wheel manufacture" });
 
         public List<string> SharedPropertiesNames
         {
-            get { return m_SharedPropertiesNames; }
+            get
+            {
+                return m_SharedPropertiesNames;
+            }
         }
 
         public class VehicleProperties
@@ -22,11 +38,11 @@ namespace Ex03.GarageLogic
             public int m_NumOfWheels;
             public float m_MaxPressure;
             public float m_TankSize;
-            public FuelType m_FuelType;
+            public eFuelType m_FuelType;
             public bool m_IsElectric;
-            public VehicleType m_VehicleType;
+            public eVehicleType m_VehicleType;
 
-            public VehicleProperties(int i_NumOfWheels,float i_MaxPressure, float i_TankSize, FuelType i_FuelType, bool i_IsElectric, VehicleType i_VehicleType)
+            public VehicleProperties(int i_NumOfWheels,float i_MaxPressure, float i_TankSize, eFuelType i_FuelType, bool i_IsElectric, eVehicleType i_VehicleType)
             {
                 m_NumOfWheels = i_NumOfWheels;
                 m_MaxPressure = i_MaxPressure;
@@ -37,23 +53,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public enum FuelType
-        {
-            None = 0,
-            Octan98 = 1,
-            Octan95 = 2,
-            Soler = 3
-        }
-
-        public enum VehicleType
-        {
-            GasCar = 1,
-            ElectricCar = 2,
-            GasMotorcycle = 3,
-            ElectricMotorcycle = 4,
-            Truck = 5
-        }
-
         public VehicleFactory()
         {
             initSupportedVehicles();
@@ -62,44 +61,43 @@ namespace Ex03.GarageLogic
 
         private void initSupportedVehicles()
         {
-            m_SupportedVehiclesInGarage.Add(VehicleType.GasMotorcycle, new VehicleProperties(2, 30f, 6f, FuelType.Octan95, false, VehicleType.GasMotorcycle));
-            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricMotorcycle, new VehicleProperties(2, 30f, 1.8f, FuelType.None, true, VehicleType.ElectricMotorcycle));
-            m_SupportedVehiclesInGarage.Add(VehicleType.GasCar, new VehicleProperties(4, 32f, 45f, FuelType.Octan95, false, VehicleType.GasCar));
-            m_SupportedVehiclesInGarage.Add(VehicleType.ElectricCar, new VehicleProperties(4, 32f, 3.2f, FuelType.None, true, VehicleType.ElectricCar));
-            m_SupportedVehiclesInGarage.Add(VehicleType.Truck, new VehicleProperties(16, 26f, 120f, FuelType.Soler, false, VehicleType.Truck));
+            m_SupportedVehiclesInGarage.Add(eVehicleType.GasMotorcycle, new VehicleProperties(2, 30f, 6f, eFuelType.Octan95, false, eVehicleType.GasMotorcycle));
+            m_SupportedVehiclesInGarage.Add(eVehicleType.ElectricMotorcycle, new VehicleProperties(2, 30f, 1.8f, eFuelType.None, true, eVehicleType.ElectricMotorcycle));
+            m_SupportedVehiclesInGarage.Add(eVehicleType.GasCar, new VehicleProperties(4, 32f, 45f, eFuelType.Octan95, false, eVehicleType.GasCar));
+            m_SupportedVehiclesInGarage.Add(eVehicleType.ElectricCar, new VehicleProperties(4, 32f, 3.2f, eFuelType.None, true, eVehicleType.ElectricCar));
+            m_SupportedVehiclesInGarage.Add(eVehicleType.Truck, new VehicleProperties(16, 26f, 120f, eFuelType.Soler, false, eVehicleType.Truck));
         }
 
         private void initVehicleExtraData()
         {
-            m_UniqueDataDictionary.Add(VehicleType.GasCar, new List<string>(new string[] { "color", "numberOfDoors", "gasAmount" }));
-            m_UniqueDataDictionary.Add(VehicleType.ElectricCar, new List<string>(new string[] { "color", "numberOfDoors", "currentBattery" }));
-            m_UniqueDataDictionary.Add(VehicleType.GasMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "currentBattary"}));
-            m_UniqueDataDictionary.Add(VehicleType.ElectricMotorcycle, new List<string>(new string[] { "licenseType", "engineVolume", "gasAmount"}));
-            m_UniqueDataDictionary.Add(VehicleType.Truck, new List<string>(new string[] { "isDangerSubstance", "maxWeight", "gasAmount" }));
+            m_UniqueDataDictionary.Add(eVehicleType.GasCar, new List<string>(new[] { "color", "numberOfDoors", "gasAmount" }));
+            m_UniqueDataDictionary.Add(eVehicleType.ElectricCar, new List<string>(new [] { "color", "numberOfDoors", "currentBattery" }));
+            m_UniqueDataDictionary.Add(eVehicleType.GasMotorcycle, new List<string>(new [] { "licenseType", "engineVolume", "currentBattery"}));
+            m_UniqueDataDictionary.Add(eVehicleType.ElectricMotorcycle, new List<string>(new [] { "licenseType", "engineVolume", "gasAmount"}));
+            m_UniqueDataDictionary.Add(eVehicleType.Truck, new List<string>(new [] { "isDangerSubstance", "maxWeight", "gasAmount" }));
         }
 
         public Vehicle CreateVehicle(int i_Type, string i_LicensePlate)
         {
-            VehicleProperties vehicleProperties;
-            VehicleType type = (VehicleType)i_Type;
+            eVehicleType type = (eVehicleType)i_Type;
 
-            m_SupportedVehiclesInGarage.TryGetValue(type, out vehicleProperties);
+            m_SupportedVehiclesInGarage.TryGetValue(type, out VehicleProperties vehicleProperties);
             switch (type)
             {
-                case VehicleType.ElectricCar:
-                case VehicleType.GasCar:
+                case eVehicleType.ElectricCar:
+                case eVehicleType.GasCar:
                     return new Car(vehicleProperties, i_LicensePlate);
-                case VehicleType.ElectricMotorcycle:
-                case VehicleType.GasMotorcycle:
+                case eVehicleType.ElectricMotorcycle:
+                case eVehicleType.GasMotorcycle:
                     return new Motorcycle(vehicleProperties, i_LicensePlate);
-                case VehicleType.Truck:
+                case eVehicleType.Truck:
                     return new Car(vehicleProperties, i_LicensePlate);
                 default:
                     return null;
             }
         }
 
-        public List<string> GetUniqueDataFields(VehicleType i_Type)
+        public List<string> GetUniqueDataFields(eVehicleType i_Type)
         {
             return m_UniqueDataDictionary[i_Type];
         }

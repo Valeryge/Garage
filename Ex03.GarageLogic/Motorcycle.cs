@@ -8,12 +8,15 @@ namespace Ex03.GarageLogic
 {
     public class Motorcycle : Vehicle
     {
-        public enum LicenseType
+        public enum eLicenseType
         {
-            AA, BB, A, B1
+            AA,
+            BB,
+            A,
+            B1
         }
 
-        public LicenseType m_LicenseType;
+        public eLicenseType m_LicenseType;
         public int m_EngineVolume;
 
         public Motorcycle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate) : base(i_Properties, i_LicensePlate)
@@ -25,29 +28,29 @@ namespace Ex03.GarageLogic
             switch (i_Pair.Key)
             {
                 case "licenseType":
-                    setLicenseType(i_Pair.Value);
+                    SetLicenseType(i_Pair.Value);
                     break;
                 case "engineVolume":
                     setEngineVolume(i_Pair.Value);
                     break;
                 case "gasAmount":
-                case "currentBattary":
-                    setCurrentEnergyAmount(i_Pair.Value);
+                case "currentBattery":
+                    SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             }
         }
 
         private void setEngineVolume(string i_Volume)
         {
-            int number;
-            bool success = int.TryParse(i_Volume, out number);
+            bool success = int.TryParse(i_Volume, out int number);
 
             if (success)
             {
                 if (number > 0)
                 {
                     m_EngineVolume = number;
-                } else
+                } 
+                else
                 {
                     throw new ArgumentException("Volume cant be negative");
                 }
@@ -58,16 +61,15 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private void setLicenseType(string i_Type)
+        public void SetLicenseType(string i_Type)
         {
-            int number;
-            bool success = int.TryParse(i_Type, out number);
+            bool success = int.TryParse(i_Type, out int number);
 
             if (success)
             {
                 if (isValidLicenseType(number))
                 {
-                    m_LicenseType = (LicenseType)number;
+                    m_LicenseType = (eLicenseType)number;
                 }
                 else
                 {
@@ -82,14 +84,7 @@ namespace Ex03.GarageLogic
 
         private bool isValidLicenseType(int i_Type)
         {
-            bool isValid = false;
-
-            if (Enum.IsDefined(typeof(LicenseType), i_Type))
-            {
-                isValid = true;
-            }
-
-            return isValid;
+            return Enum.IsDefined(typeof(eLicenseType), i_Type);
         }
 
         public Dictionary<string, object> GetMotorcycleData()
