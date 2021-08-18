@@ -18,7 +18,6 @@ namespace Ex03.GarageLogic
 
         public Motorcycle(VehicleFactory.VehicleProperties i_Properties, string i_LicensePlate) : base(i_Properties, i_LicensePlate)
         {
-            // TODO:: fill
         }
 
         public void SetProperty(KeyValuePair<string, string> i_Pair)

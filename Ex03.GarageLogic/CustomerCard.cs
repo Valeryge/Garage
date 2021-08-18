@@ -19,6 +19,9 @@ namespace Ex03.GarageLogic
             set {
                 if (Enum.IsDefined(typeof(RepairState), value)) {
                     m_VehicleState = value;
+                } else
+                {
+                    throw new ArgumentException("Not a defined repair state");
                 }
             }
         }
