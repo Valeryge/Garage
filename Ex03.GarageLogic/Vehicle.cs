@@ -109,11 +109,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private void setEnergyPercentage(string i_Percentage)
-        {
-            //TODO : caculate
-        }
-
         public void AddPressureToTires()
         {
             foreach (Wheel wheel in m_Wheels) {
