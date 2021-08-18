@@ -10,7 +10,6 @@ namespace Ex03.GarageLogic
     {
         protected string m_ModelName;
         protected string m_LicensePlate;
-        protected float m_EnergyPercent;
         protected List<Wheel> m_Wheels = new List<Wheel>();
         protected Engine m_Engine;
         protected readonly VehicleFactory.VehicleType r_Type;
@@ -49,6 +48,19 @@ namespace Ex03.GarageLogic
             m_IsElectric = i_Properties.m_IsElectric;
         }
 
+        public float EnergyPercentage
+        {
+            get
+            {
+                float percentage = 0;
+                if (m_Engine != null)
+                {
+                    percentage = m_Engine.GetEnergyPercent();
+                }
+                return percentage;
+            }
+        }
+
         protected void setCurrentEnergyAmount(string i_Amount)
         {
             float number;
@@ -70,9 +82,6 @@ namespace Ex03.GarageLogic
             {
                 case "model name":
                     m_ModelName = i_Pair.Value;
-                    break;
-                case "energy percentage":
-                    setEnergyPercentage(i_Pair.Value);
                     break;
                 case "air in tires":
                     SetTiresPressure(i_Pair.Value);
@@ -122,7 +131,7 @@ namespace Ex03.GarageLogic
 
             data.Add("License Plate", m_LicensePlate);
             data.Add("Model Name", m_ModelName);
-            data.Add("Energy Percent", m_EnergyPercent);
+            data.Add("Energy Percent", this.EnergyPercentage);
             int wheelIndex = 1;
             foreach (Wheel wheel in m_Wheels)
             {
