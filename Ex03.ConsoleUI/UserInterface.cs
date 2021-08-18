@@ -174,18 +174,21 @@ namespace Ex03.ConsoleUI
                 int newRepairState = Utils.GetNumberFromUser(1,
                     Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
                     "Invalid repair state");
-                m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+                try
+                {
+                    m_GarageManager.ChangeVehicleRepairState(licencePlate, newRepairState);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 PrintVichelDidntFound();
             }
         }
-
-        private void PrintVichelDidntFound()
-        {
-            Console.WriteLine("Didn't find a vichel with this plate number");
-        }
+     
         private void PrintAllVichelsPlateNumbers()
         {
             Console.WriteLine("Enter new filter status:");
@@ -195,10 +198,16 @@ namespace Ex03.ConsoleUI
               Enum.GetValues(typeof(GarageLogic.CustomerCard.RepairState)).Length,
               "Invalid repair state");
             List<string> plates = repairStatus == 0 ? m_GarageManager.GetAllLicensePlates() : m_GarageManager.GetSortedLicensePlates(repairStatus);
-
-            foreach(string plate in plates)
+            if (plates == null || plates.Count == 0)
             {
-                Console.WriteLine(plate);
+                Console.WriteLine("No vichel found in this status");
+            }
+            else
+            {
+                foreach (string plate in plates)
+                {
+                    Console.WriteLine(plate);
+                }
             }
         }
 
@@ -207,8 +216,14 @@ namespace Ex03.ConsoleUI
             string licensePlate = GetLicensePlateNumber(out bool alreadyExists);
             if (alreadyExists)
             {
-                m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
-                Console.WriteLine("Changed repair status to in repair");
+                try
+                {
+                    m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
+                    Console.WriteLine("Changed repair status to in repair");
+                }catch(ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
@@ -273,6 +288,11 @@ namespace Ex03.ConsoleUI
             string licensePlate = Console.ReadLine();
             io_found = m_GarageManager.IsVehicleInGarage(licensePlate);
             return licensePlate;
+        }
+
+        private void PrintVichelDidntFound()
+        {
+            Console.WriteLine("Didn't find a vichel with this plate number");
         }
 
         private void PrintVehicleTypeOptionsString()
