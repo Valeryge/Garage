@@ -233,8 +233,7 @@ namespace Ex03.ConsoleUI
                 int vehicleType = Utils.GetNumberFromUser(0, Enum.GetValues(typeof(GarageLogic.VehicleFactory.eVehicleType)).Length, "Invalid vehicle type");
                 Console.WriteLine("Please enter customer name");
                 string name = Console.ReadLine();
-                Console.WriteLine("Please enter customer phone");
-                string phone = Console.ReadLine();
+                string phone = getPhoneNumber();
 
                 m_GarageManager.AddVehicleToGarage(licensePlate, name, phone, vehicleType);
                 List<string> sharedAttributes = m_GarageManager.GetSharedPropertyNames();
@@ -280,6 +279,26 @@ namespace Ex03.ConsoleUI
                     }
                 }
             }
+        }
+
+        private string getPhoneNumber()
+        {
+            bool valid = false;
+            string phone = "";
+            Console.WriteLine("Please enter customer phone");
+            while (!valid)
+            {
+                phone = Console.ReadLine();
+                if(phone.Length > 0 && Int32.TryParse(phone,out int number))
+                {
+                    valid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid phone number, please try again");
+                }
+            }
+            return phone;
         }
 
         private void printAttributeRequest(string attribute)
