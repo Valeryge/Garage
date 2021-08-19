@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
         protected List<Wheel> m_Wheels = new List<Wheel>();
         protected Engine m_Engine;
         protected readonly VehicleFactory.eVehicleType r_Type;
-        public bool m_IsElectric;
+        private bool m_IsElectric;
 
         public string LicensePlate
         {
@@ -65,6 +65,7 @@ namespace Ex03.GarageLogic
                 {
                     percentage = m_Engine.GetEnergyPercent();
                 }
+
                 return percentage;
             }
         }
@@ -135,11 +136,12 @@ namespace Ex03.GarageLogic
         public Dictionary<string, object> GetVehicleData()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
+            int wheelIndex = 1;
 
             data.Add("License Plate", m_LicensePlate);
+            data.Add("Type", r_Type);
             data.Add("Model Name", m_ModelName);
             data.Add("Energy Percent", this.EnergyPercentage);
-            int wheelIndex = 1;
             foreach (Wheel wheel in m_Wheels)
             {
                 data.Add(String.Format("Wheel Data {0}", wheelIndex), wheel.GetData());

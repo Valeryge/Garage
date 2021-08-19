@@ -64,11 +64,11 @@ namespace Ex03.GarageLogic
                 data.Add("Owner phone number", card.CustomerPhone);
 
                 return data;
-            } else
+            }
+            else
             {
                 throw new ArgumentException("Vehicle not in garage");
             }
-           
         }
 
         public void SetProperty(string i_LicensePlate, KeyValuePair<string, string> i_Pair)
@@ -187,7 +187,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //TODO: chnage in UI - delete 2nd paraeter
         public void AddPressureToTires(string i_LicensePlate)
         {
             m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);

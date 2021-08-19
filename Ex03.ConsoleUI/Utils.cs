@@ -5,7 +5,6 @@ namespace Ex03.ConsoleUI
 {
     public static class Utils
     {
-
         public static int GetNumberFromUser(int i_MinValue, int i_MaxValue, string i_ErrorMessage)
         {
             int value;

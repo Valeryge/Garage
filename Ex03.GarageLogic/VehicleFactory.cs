@@ -70,7 +70,7 @@ namespace Ex03.GarageLogic
 
         private void initVehicleExtraData()
         {
-            m_UniqueDataDictionary.Add(eVehicleType.GasCar, new List<string>(new[] { "color", "numberOfDoors", "gasAmount" }));
+            m_UniqueDataDictionary.Add(eVehicleType.GasCar, new List<string>(new[] { "color", "number Of Doors", "gas Amount" }));
             m_UniqueDataDictionary.Add(eVehicleType.ElectricCar, new List<string>(new [] { "color", "number Of Doors", "current Battery" }));
             m_UniqueDataDictionary.Add(eVehicleType.GasMotorcycle, new List<string>(new [] { "license Type", "engine Volume", "current Battery"}));
             m_UniqueDataDictionary.Add(eVehicleType.ElectricMotorcycle, new List<string>(new [] { "license Type", "engine Volume", "gas Amount"}));

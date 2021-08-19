@@ -19,11 +19,9 @@ namespace Ex03.ConsoleUI
 
             while (isWorking)
             {
-                int serviceChoice;
-
                 Console.WriteLine("Welcome!");
                 Console.WriteLine("Service Menu");
-                Console.WriteLine("========================");
+                Console.WriteLine("=========================================");
                 Console.WriteLine("(1) Add vehicle to the garage");
                 Console.WriteLine("(2) Show & Filter vehicles in the garage");
                 Console.WriteLine("(3) Change vehicle state in garage");
@@ -32,9 +30,9 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("(6) Charge electric vehicle");
                 Console.WriteLine("(7) Show full vehicle details");
                 Console.WriteLine("(8) Exit");
-                Console.WriteLine("========================");
+                Console.WriteLine("=========================================");
                 Console.WriteLine("Press your choice :");
-                serviceChoice = Utils.GetNumberFromUser(1, 8, "Invalid menu choice");
+                int serviceChoice = Utils.GetNumberFromUser(1, 8, "Invalid menu choice");
                 switch (serviceChoice)
                 {
                     case 1:
@@ -119,6 +117,7 @@ namespace Ex03.ConsoleUI
         private void addFuelToVehicle()
         {
             string licensePlate = getLicensePlateNumber(out bool found);
+
             if (found)
             {
                 Console.WriteLine("Enter fuel type:");
@@ -221,7 +220,8 @@ namespace Ex03.ConsoleUI
                 {
                     m_GarageManager.ChangeVehicleRepairState(licensePlate, 1);
                     Console.WriteLine("Changed repair status to in repair");
-                }catch(ArgumentException e)
+                }
+                catch(ArgumentException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -234,10 +234,8 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("Please enter customer name");
                 string name = Console.ReadLine();
                 string phone = getPhoneNumber();
-
                 m_GarageManager.AddVehicleToGarage(licensePlate, name, phone, vehicleType);
                 List<string> sharedAttributes = m_GarageManager.GetSharedPropertyNames();
-
                 foreach (string attribute in sharedAttributes)
                 {
                     bool toContinue = true;
@@ -259,7 +257,6 @@ namespace Ex03.ConsoleUI
                 }
 
                 List<string> uniqueAttributes = m_GarageManager.GetUniqueDataFields(vehicleType);
-
                 foreach (string attribute in uniqueAttributes)
                 {
                     bool toContinue = true;
@@ -285,19 +282,21 @@ namespace Ex03.ConsoleUI
         {
             bool valid = false;
             string phone = "";
+
             Console.WriteLine("Please enter customer phone");
             while (!valid)
             {
                 phone = Console.ReadLine();
-                if(phone.Length > 0 && Int32.TryParse(phone,out int number))
+                if(phone.Length > 8 && phone.Length < 11 && Int32.TryParse(phone,out int number))
                 {
                     valid = true;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid phone number, please try again");
+                    Console.WriteLine("Invalid phone number, please try again (phone number should be 9 or 10 digits long)");
                 }
             }
+
             return phone;
         }
 
@@ -325,6 +324,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Enter vehicle license plate number:");
             string licensePlate = Console.ReadLine();
             io_found = m_GarageManager.IsVehicleInGarage(licensePlate);
+
             return licensePlate;
         }
 
