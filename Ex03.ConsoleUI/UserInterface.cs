@@ -25,16 +25,16 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("Service Menu");
                 Console.WriteLine("========================");
                 Console.WriteLine("(1) Add vehicle to the garage");
-                Console.WriteLine("(2) Show & Filter cars in the garage");
-                Console.WriteLine("(3) Change car state in garage");
+                Console.WriteLine("(2) Show & Filter vehicles in the garage");
+                Console.WriteLine("(3) Change vehicle state in garage");
                 Console.WriteLine("(4) Blow wheels to max");
                 Console.WriteLine("(5) Fuel gas vehicle");
                 Console.WriteLine("(6) Charge electric vehicle");
                 Console.WriteLine("(7) Show full vehicle details");
+                Console.WriteLine("(8) Exit");
+                Console.WriteLine("========================");
                 Console.WriteLine("Press your choice :");
-
                 serviceChoice = Utils.GetNumberFromUser(1, 8, "Invalid menu choice");
-
                 switch (serviceChoice)
                 {
                     case 1:
@@ -63,7 +63,9 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Good bye");
                         break;
                 }
-                Console.ReadLine();
+
+                Console.WriteLine("\n\nPress any key to clear screen");
+                Console.ReadKey();
                 System.Console.Clear();
             }
         }
@@ -116,7 +118,6 @@ namespace Ex03.ConsoleUI
 
         private void addFuelToVehicle()
         {
-
             string licensePlate = getLicensePlateNumber(out bool found);
             if (found)
             {
@@ -145,10 +146,9 @@ namespace Ex03.ConsoleUI
         private void inflateAirWheels()
         {
             string licensePlate = getLicensePlateNumber(out bool found);
+
             if (found)
             {
-                Console.WriteLine("Enter vehicle air pressure number:");
-                float pressure = Utils.GetFloatFromUser(0, "Air Pressure cannot be negative");
                 try
                 {
                     m_GarageManager.AddPressureToTires(licensePlate);
@@ -200,10 +200,11 @@ namespace Ex03.ConsoleUI
             List<string> plates = repairStatus == 0 ? m_GarageManager.GetAllLicensePlates() : m_GarageManager.GetSortedLicensePlates(repairStatus);
             if (plates == null || plates.Count == 0)
             {
-                Console.WriteLine("No vehicle found in this status");
+                Console.WriteLine("No vehicles found");
             }
             else
             {
+                Console.WriteLine("Found vehicles:");
                 foreach (string plate in plates)
                 {
                     Console.WriteLine(plate);
@@ -229,7 +230,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine("Please enter vehicle type: ");
                 printVehicleTypeOptionsString();
-                int vehicleType = Utils.GetNumberFromUser(0, Enum.GetValues(typeof(GarageLogic.VehicleFactory.eVehicleType)).Length, "Invalid vichel type");
+                int vehicleType = Utils.GetNumberFromUser(0, Enum.GetValues(typeof(GarageLogic.VehicleFactory.eVehicleType)).Length, "Invalid vehicle type");
                 Console.WriteLine("Please enter customer name");
                 string name = Console.ReadLine();
                 Console.WriteLine("Please enter customer phone");
@@ -288,6 +289,16 @@ namespace Ex03.ConsoleUI
             {
                 printColorOptionsString();
             }
+
+            if (attribute == "if holds dangerous substences")
+            {
+                Console.WriteLine("Press 1 for YES\n press 0 for NO");
+            }
+
+            if (attribute == "license Type")
+            {
+                printLicenseTypeOptions();
+            }
         }
 
         private string getLicensePlateNumber(out bool io_found)
@@ -300,7 +311,7 @@ namespace Ex03.ConsoleUI
 
         private void printVehicleDidNotFound()
         {
-            Console.WriteLine("Didn't find a vehicle with this plate number");
+            Console.WriteLine("Vehicle not in garage");
         }
 
         private void printVehicleTypeOptionsString()
@@ -311,6 +322,11 @@ namespace Ex03.ConsoleUI
         private void printColorOptionsString()
         {
             Utils.PrintEnumValues(typeof(GarageLogic.Car.eColor));
+        }
+
+        private void printLicenseTypeOptions()
+        {
+            Utils.PrintEnumValues(typeof(GarageLogic.Motorcycle.eLicenseType));
         }
 
         private void printFuelOptionsString()

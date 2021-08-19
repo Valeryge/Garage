@@ -36,12 +36,12 @@ namespace Ex03.GarageLogic
         {
             set
             {
-                if (value <= m_MaxPressure)
+                if (value <= m_MaxPressure && value >= 0)
                 {
                     m_Pressure = value;
                 } else
                 {
-                    throw new ValueOutOfRangeException(String.Format("Pressure cant be higher than {0}", MaxPressure), 0, MaxPressure);
+                    throw new ValueOutOfRangeException(String.Format("Pressure can be between 0 and {0}", MaxPressure), 0, MaxPressure);
                 }
             }
         }

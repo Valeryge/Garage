@@ -19,13 +19,13 @@ namespace Ex03.GarageLogic
         {
             switch (i_Pair.Key)
             {
-                case "isDangerSubstance":
+                case "if holds dangerous substences":
                     SetIsDangerSubstances(i_Pair.Value);
                     break;
-                case "maxWeight":
+                case "max Weight":
                     setMaxWeight(i_Pair.Value);
                     break;
-                case "gasAmount":
+                case "gas Amount":
                     SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             }

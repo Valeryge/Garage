@@ -43,22 +43,32 @@ namespace Ex03.GarageLogic
             Dictionary<string, object> data = null;
 
             m_CustomerCards.TryGetValue(i_LicensePlate, out CustomerCard card);
-            switch (card.Vehicle.VehicleType)
+            if (card != null)
             {
-                case VehicleFactory.eVehicleType.ElectricCar:
-                case VehicleFactory.eVehicleType.GasCar:
-                    data = (card.Vehicle as Car).GetCarData();
-                    break;
-                case VehicleFactory.eVehicleType.ElectricMotorcycle:
-                case VehicleFactory.eVehicleType.GasMotorcycle:
-                    data = (card.Vehicle as Motorcycle).GetMotorcycleData();
-                    break;
-                case VehicleFactory.eVehicleType.Truck:
-                    data = (card.Vehicle as Truck).GetTruckData();
-                    break;
-            }
+                switch (card.Vehicle.VehicleType)
+                {
+                    case VehicleFactory.eVehicleType.ElectricCar:
+                    case VehicleFactory.eVehicleType.GasCar:
+                        data = (card.Vehicle as Car).GetCarData();
+                        break;
+                    case VehicleFactory.eVehicleType.ElectricMotorcycle:
+                    case VehicleFactory.eVehicleType.GasMotorcycle:
+                        data = (card.Vehicle as Motorcycle).GetMotorcycleData();
+                        break;
+                    case VehicleFactory.eVehicleType.Truck:
+                        data = (card.Vehicle as Truck).GetTruckData();
+                        break;
+                }
 
-            return data;
+                data.Add("Owner name", card.CustomerName);
+                data.Add("Owner phone number", card.CustomerPhone);
+
+                return data;
+            } else
+            {
+                throw new ArgumentException("Vehicle not in garage");
+            }
+           
         }
 
         public void SetProperty(string i_LicensePlate, KeyValuePair<string, string> i_Pair)
@@ -83,7 +93,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                //TODO : deal if card is null ?
+                throw new ArgumentException("Vehicle not in garage");
             }
         }
 
@@ -146,7 +156,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                //TODO : deal if card is null ?
+                throw new ArgumentException("Vehicle not in garage");
             }
         }
 
@@ -173,7 +183,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                //TODO : deal if card is null ?
+                throw new ArgumentException("Vehicle not in garage");
             }
         }
 
@@ -187,7 +197,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                //TODO : deal if card is null ?
+                throw new ArgumentException("Vehicle not in garage");
             }
         }
 

@@ -14,13 +14,13 @@ namespace Ex03.GarageLogic
 
         public void AddFuel(float i_FuelAmount, VehicleFactory.eFuelType i_Type)
         {
-            if (i_Type == m_FuelType)
+            if (i_Type != m_FuelType)
             {
                 throw new ArgumentException("Incorrect fuel type");
             }
             else if (i_FuelAmount < 0 || i_FuelAmount + m_CurrentEnergyAmount > m_MaxEnergyAmount)
             {
-                throw new ValueOutOfRangeException("Fuel amount is out of range",0,CurrentEnergyAmount);
+                throw new ValueOutOfRangeException("Fuel amount is out of range", 0, CurrentEnergyAmount);
             } 
             else
             {

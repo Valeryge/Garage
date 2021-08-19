@@ -27,14 +27,14 @@ namespace Ex03.GarageLogic
         {
             switch (i_Pair.Key)
             {
-                case "licenseType":
+                case "license Type":
                     SetLicenseType(i_Pair.Value);
                     break;
-                case "engineVolume":
+                case "engine Volume":
                     setEngineVolume(i_Pair.Value);
                     break;
-                case "gasAmount":
-                case "currentBattery":
+                case "gas Amount":
+                case "current Battery":
                     SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             }

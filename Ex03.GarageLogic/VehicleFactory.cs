@@ -71,10 +71,10 @@ namespace Ex03.GarageLogic
         private void initVehicleExtraData()
         {
             m_UniqueDataDictionary.Add(eVehicleType.GasCar, new List<string>(new[] { "color", "numberOfDoors", "gasAmount" }));
-            m_UniqueDataDictionary.Add(eVehicleType.ElectricCar, new List<string>(new [] { "color", "numberOfDoors", "currentBattery" }));
-            m_UniqueDataDictionary.Add(eVehicleType.GasMotorcycle, new List<string>(new [] { "licenseType", "engineVolume", "currentBattery"}));
-            m_UniqueDataDictionary.Add(eVehicleType.ElectricMotorcycle, new List<string>(new [] { "licenseType", "engineVolume", "gasAmount"}));
-            m_UniqueDataDictionary.Add(eVehicleType.Truck, new List<string>(new [] { "isDangerSubstance", "maxWeight", "gasAmount" }));
+            m_UniqueDataDictionary.Add(eVehicleType.ElectricCar, new List<string>(new [] { "color", "number Of Doors", "current Battery" }));
+            m_UniqueDataDictionary.Add(eVehicleType.GasMotorcycle, new List<string>(new [] { "license Type", "engine Volume", "current Battery"}));
+            m_UniqueDataDictionary.Add(eVehicleType.ElectricMotorcycle, new List<string>(new [] { "license Type", "engine Volume", "gas Amount"}));
+            m_UniqueDataDictionary.Add(eVehicleType.Truck, new List<string>(new [] { "if holds dangerous substences", "max Weight", "gas Amount" }));
         }
 
         public Vehicle CreateVehicle(int i_Type, string i_LicensePlate)
@@ -91,7 +91,7 @@ namespace Ex03.GarageLogic
                 case eVehicleType.GasMotorcycle:
                     return new Motorcycle(vehicleProperties, i_LicensePlate);
                 case eVehicleType.Truck:
-                    return new Car(vehicleProperties, i_LicensePlate);
+                    return new Truck(vehicleProperties, i_LicensePlate);
                 default:
                     return null;
             }

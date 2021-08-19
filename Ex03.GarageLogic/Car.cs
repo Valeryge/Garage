@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
                     m_Color = (eColor)number;
                 } else
                 {
-                    throw new ArgumentException("Not Valid Color Enum");
+                    throw new ArgumentException("Not a Valid Color");
                 }
             } else
             {
@@ -70,11 +70,11 @@ namespace Ex03.GarageLogic
                 case "color":
                     setColor(i_Pair.Value);
                     break;
-                case "numberOfDoors":
+                case "number Of Doors":
                     setNumOfDoors(i_Pair.Value);
                     break;
-                case "currentBattery":
-                case "gasAmount":
+                case "current Battery":
+                case "gas Amount":
                     SetCurrentEnergyAmount(i_Pair.Value);
                     break;
             } 
